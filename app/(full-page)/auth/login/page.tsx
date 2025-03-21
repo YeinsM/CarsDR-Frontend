@@ -7,10 +7,15 @@ import { InputText } from 'primereact/inputtext';
 import { Page } from '../../../../types/layout';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
+import { Tooltip } from 'primereact/tooltip';
 
 const Login: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
+
+    const goHome = () => {
+        router.push('/');
+    };
 
     return (
         <React.Fragment>
@@ -41,8 +46,21 @@ const Login: Page = () => {
                     >
                         <div
                             className="flex flex-column w-full justify-content-center align-items-center px-3 py-3 lg:px-5 lg:py-5"
-                            style={{ borderRadius: '14px', backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.30)' : 'rgba(107, 114, 128, 0.80)', maxWidth: '370px' }}
+                            style={{ borderRadius: '14px', backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.30)' : 'rgba(107, 114, 128, 0.80)', maxWidth: '350px' }}
                         >
+                            <div className="relative w-full" style={{ userSelect: 'none' }}>
+                                <Button
+                                    className="absolute left-4 text-primary top-1/2 transform -translate-y-1/2 flex align-items-center justify-content-center bg-transparent border-none"
+                                    style={{ width: '30px', height: '30px' }}
+                                    icon="pi pi-home"
+                                    data-pr-tooltip="Home"
+                                    data-pr-position="right"
+                                    pt={{ icon: { style: { fontSize: '1.2rem' } } }}
+                                    onClick={goHome}
+                                ></Button>
+
+                                <Tooltip target=".absolute.left-4" />
+                            </div>
                             <div className="flex align-items-center mb-5 logo-container ">
                                 <p className="text-3xl font-italic mr-3 font-bold" style={{ color: '#0bd18a' }}>
                                     CARS-DR
