@@ -70,13 +70,13 @@ const Login: Page = () => {
                             <div className="form-container">
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-envelope text-primary"></i>
-                                    <InputText type="text" placeholder="Email" className={`block mb-4 ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-200'}`} style={{ maxWidth: '340px', minWidth: '270px' }} />
+                                    <InputText type="text" placeholder="Email" className={`block mb-4 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`} style={{ maxWidth: '340px', minWidth: '270px' }} />
                                 </span>
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-key text-primary"></i>
-                                    <InputText type="password" placeholder="Password" className={`block mb-3 ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-200'}`} style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <InputText type="password" placeholder="Password" className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`} style={{ maxWidth: '320px', minWidth: '270px' }} />
                                 </span>
-                                <a href="/auth/forgotpassword" className="flex mb-4 text-sm font-semibold text-gray-50 hover:text-primary">
+                                <a href="/auth/forgotpassword" className="flex mb-4 text-md font-semibold text-gray-50 hover:text-primary">
                                     Forgot your password?
                                 </a>
                             </div>
@@ -95,9 +95,9 @@ const Login: Page = () => {
                                     Login
                                 </Button>
 
-                                <span className={`flex text-sm mb-1 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-white'}`}>
+                                <span className={`flex text-md mb-1 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-white'}`}>
                                     Don’t have an account?
-                                    <a className="cursor-pointer ml-1 text-white hover:text-primary" href="/auth/register">
+                                    <a className="cursor-pointer ml-1 text-md text-white hover:text-primary" href="/auth/register">
                                         Sign-up here
                                     </a>
                                 </span>

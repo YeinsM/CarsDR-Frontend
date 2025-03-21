@@ -120,7 +120,7 @@ const Register: Page = () => {
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-key text-primary"></i>
                                     <InputText
-                                        
+
                                         type="password"
                                         autoComplete="off"
                                         required
@@ -138,12 +138,12 @@ const Register: Page = () => {
                                 </div>
                             </div>
                             <div className="button-container mt-3 text-left" style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}>
-                                <div className="buttons flex align-items-center gap-3 w-full">
-                                    <Button type="button" className="block w-full" style={{ maxWidth: '320px', marginBottom: '20px' }}>
+                                <div className="buttons flex align-items-center justify-content-center gap-3 w-full">
+                                    <Button type="button" className="block w-full" style={{ maxWidth: '270px', marginBottom: '20px', minWidth: '270px' }}>
                                         Submit
                                     </Button>
                                 </div>
-                                <span className={`font-medium ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>
+                                <span className={`font-medium flex align-items-center justify-content-center gap-2 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>
                                     Already have an account?{' '}
                                     <a href="/auth/login" className={`${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-50'} font-semibold cursor-pointer hover:text-primary transition-colors transition-duration-300 `}>
                                         Login
@@ -152,7 +152,7 @@ const Register: Page = () => {
                             </div>
 
                             <div className="login-footer flex align-items-center mt-2">
-                                <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 surface-border">
+                                <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 border-primary">
                                     <p className="text-sm text-primary mr-3">CARSDR</p>
                                 </div>
                                 <span className="text-sm text-primary mr-3">&copy; Copyright 2025</span>
