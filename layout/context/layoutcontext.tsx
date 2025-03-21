@@ -13,7 +13,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         ripple: false,
         inputStyle: 'outlined',
         menuMode: 'static',
-        colorScheme: 'dark',
+        colorScheme: 'light',
         theme: 'magenta',
         scale: 14
     });

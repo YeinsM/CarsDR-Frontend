@@ -9,6 +9,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Page } from '../../../../types/layout';
 import { classNames } from 'primereact/utils';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { Tooltip } from 'primereact/tooltip';
 
 const Register: Page = () => {
     const [confirmed, setConfirmed] = useState(false);
@@ -28,10 +29,18 @@ const Register: Page = () => {
                     'layout-dark': layoutConfig.colorScheme === 'dark'
                 })}
             >
-                <div className="login-image w-6 h-screen hidden md:block" style={{ maxWidth: '490px' }}>
+                {/* <div className="login-image w-6 h-screen hidden md:block" style={{ maxWidth: '490px' }}>
                     <img src={`/layout/images/pages/register-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png`} alt="atlantis" className="h-screen w-full" />
-                </div>
-                <div className="w-full" style={{ background: 'var(--surface-ground)' }}>
+                </div> */}
+
+                <div
+                    className="w-full"
+                    style={{
+                        backgroundImage: `url(/layout/images/pages/register-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                >
                     <div
                         className={classNames(
                             'p-fluid',
@@ -43,66 +52,97 @@ const Register: Page = () => {
                             'w-full',
                             'flex',
                             'align-items-center',
-                            'md:align-items-start',
+                            'md:align-items-center',
                             'justify-content-center',
                             'flex-column',
                             'bg-auto',
                             'md:bg-contain',
-                            'bg-no-repeat'
+                            'bg-no-repeat',
+                            'px-2'
                         )}
-                        style={{
-                            padding: '20% 10% 20% 10%',
-                            background: 'var(--exception-pages-image)'
-                        }}
                     >
-                        <div className="flex flex-column">
-                            <div className="flex align-items-center mb-6 logo-container">
-                                <img src={`/layout/images/logo/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="login-logo" style={{ width: '45px' }} alt="logo" />
-                                <img src={`/layout/images/logo/appname-${layoutConfig.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="login-appname ml-3" style={{ width: '100px' }} alt="appname" />
+                        <div
+                            className="flex flex-column lg:px-3 lg:py-3 w-full lg:max-w-29rem align-items-center justify-content-center"
+                            style={{ borderRadius: '14px', backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.80)' : 'rgba(107, 114, 128, 1.80)' }}
+                        >
+
+                            <div className="relative w-full">
+                                <Button
+                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 flex align-items-center justify-content-center bg-transparent border-none"
+                                    style={{ width: "30px", height: "30px" }}
+                                    icon="pi pi-home"
+                                    data-pr-tooltip="Home"
+                                    data-pr-position="right"
+                                    pt={{ icon: { style: { fontSize: '1.5rem' } } }} 
+                                    onClick={goHome}
+                                    
+                                >
+
+                                </Button>
+
+                                <Tooltip target=".absolute.left-4" />
                             </div>
-                            <div className="form-container text-left" style={{ maxWidth: '320px', minWidth: '270px' }}>
-                                <h4 className="m-0 mb-2">Register</h4>
-                                <span className="block text-600 font-medium mb-4">Let&lsquo;s get started</span>
+                            {/* logo */}
+                            <div className="flex align-items-center gap-4 my-3 logo-container">
+                                {/* <img src={`/layout/images/logo/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="login-logo" style={{ width: '45px' }} alt="logo" />
+                                <img src={`/layout/images/logo/appname-${layoutConfig.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="login-appname ml-3" style={{ width: '100px' }} alt="appname" /> */}
+
+
+                                <p className="text-3xl font-italic mr-3 font-bold w-full text-center" style={{ color: '#0bd18a' }}>
+                                    CARS-DR
+                                </p>
+                            </div>
+
+                            <div className="form-container text-left">
+                                <h4 className="m-0 mb-2" style={{ color: '#0bd18a' }}>
+                                    Register
+                                </h4>
+                                <span className={`block font-medium mb-4 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>Let&lsquo;s get started</span>
                                 <span className="p-input-icon-left">
-                                    <i className="pi pi-user"></i>
-                                    <InputText type="text" autoComplete="off" placeholder="username" className="block mb-3" style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <i className="pi pi-user text-primary"></i>
+                                    <InputText type="text" autoComplete="off" required placeholder="username" className={`block mb-3 ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-100' : 'bg-gray-200'}`} style={{ maxWidth: '320px', minWidth: '300px' }} />
                                 </span>
                                 <span className="p-input-icon-left">
-                                    <i className="pi pi-envelope"></i>
-                                    <InputText type="email" autoComplete="off" placeholder="email" className="block mb-3" style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <i className="pi pi-envelope text-primary"></i>
+                                    <InputText type="email" autoComplete="off" required placeholder="email" className={`block mb-3 ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-100' : 'bg-gray-200'}`} style={{ maxWidth: '320px', minWidth: '300px' }} />
                                 </span>
                                 <span className="p-input-icon-left">
-                                    <i className="pi pi-key"></i>
-                                    <InputText type="password" autoComplete="off" placeholder="Password" className="block mb-3" style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <i className="pi pi-key text-primary"></i>
+                                    <InputText type="password" autoComplete="off" required placeholder="Password" className={`block mb-3 ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-100' : 'bg-gray-200'}`} style={{ maxWidth: '320px', minWidth: '300px' }} />
                                 </span>
                                 <div className="mt-2 flex flex-wrap">
-                                    <Checkbox type="checkbox" id="confirmed" checked={confirmed} onChange={() => setConfirmed(!confirmed)} className="mr-2" />{' '}
-                                    <label htmlFor="confirmed" className="text-900 font-medium mr-2">
+                                    <Checkbox type="checkbox" id="confirmed" checked={confirmed} onChange={() => setConfirmed(!confirmed)} className="mr-2 " />{' '}
+                                    <label htmlFor="confirmed" className={`font-medium mr-2 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>
                                         I have read the
                                     </label>
-                                    <a className="text-600 cursor-pointer hover:text-primary cursor-pointer">Terms and Conditions</a>
+                                    <a className={`cursor-pointer hover:text-primary cursor-pointer ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'} `}>Terms and Conditions</a>
                                 </div>
                             </div>
-                            <div className="button-container mt-4 text-left" style={{ maxWidth: '320px', minWidth: '270px' }}>
+                            <div className="button-container mt-3 text-left" style={{ maxWidth: '320px', minWidth: '270px' }}>
                                 <div className="buttons flex align-items-center gap-3">
-                                    <Button type="button" onClick={goHome} className="block p-button-danger p-button-outlined" style={{ maxWidth: '320px', marginBottom: '32px' }}>
-                                        Cancel
-                                    </Button>
-                                    <Button type="button" className="block" style={{ maxWidth: '320px', marginBottom: '32px' }}>
+
+                                    <Button type="button" className="block" style={{ maxWidth: '320px', marginBottom: '20px' }}>
                                         Submit
                                     </Button>
                                 </div>
-                                <span className="font-medium text-600">
-                                    Already have an account? <a className="font-semibold cursor-pointer text-900 hover:text-primary transition-colors transition-duration-300">Login</a>
+                                <span className={`font-medium ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>
+                                    Already have an account?{' '}
+                                    <a
+                                        href="/auth/login"
+                                        className={`${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-50'} 
+                                    font-semibold cursor-pointer hover:text-primary transition-colors transition-duration-300 `}
+                                    >
+                                        Login
+                                    </a>
                                 </span>
                             </div>
-                        </div>
-                        <div className="login-footer flex align-items-center absolute" style={{ bottom: '75px' }}>
-                            <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 surface-border">
-                                <img src="/layout/images/logo/logo-gray.png" className="login-footer-logo" style={{ width: '22px' }} alt="logo" />
-                                <img src="/layout/images/logo/appname-gray.png" className="login-footer-appname ml-2" style={{ width: '45px' }} alt="appname" />
+
+                            <div className="login-footer flex align-items-center mt-2">
+                                <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 surface-border">
+                                    <p className="text-sm text-primary mr-3">CARSDR</p>
+                                </div>
+                                <span className="text-sm text-primary mr-3">&copy; Copyright 2025</span>
                             </div>
-                            <span className="text-sm text-color-secondary mr-3">Copyright 2023</span>
                         </div>
                     </div>
                 </div>
