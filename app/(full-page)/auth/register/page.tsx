@@ -65,7 +65,7 @@ const Register: Page = () => {
                             className="flex flex-column py-2 sm:max-w-22rem md:max-w-26rem px-2 lg:px-3 lg:py-3 w-full lg:max-w-29rem align-items-center justify-content-center"
                             style={{
                                 borderRadius: '14px',
-                                backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.80)' : 'rgba(107, 114, 128, 1.1)'
+                                backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.60)' : 'rgba(107, 114, 128, 0.40)'
                             }}
                         >
                             <div className="relative w-full" style={{ userSelect: 'none' }}>
@@ -129,7 +129,7 @@ const Register: Page = () => {
                                         style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
                                     />
                                 </span>
-                                <div className="mt-2 flex flex-wrap">
+                                <div className="mt-2 flex flex-wrap text-sm">
                                     <Checkbox type="checkbox" id="confirmed" checked={confirmed} onChange={() => setConfirmed(!confirmed)} className="mr-2" />{' '}
                                     <label htmlFor="confirmed" className={`font-medium mr-2 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50 '}`}>
                                         I have read the
