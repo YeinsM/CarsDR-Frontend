@@ -13,13 +13,31 @@ import { Tooltip } from 'primereact/tooltip';
 
 const Register: Page = () => {
     const [confirmed, setConfirmed] = useState(false);
-
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
+
+    const [formData, setFormData] = useState({
+        firstname: '',
+        lastname: '',
+        username: '',
+        email: '',
+        password: '',
+        confirmed: false
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value
+        });
+    };
 
     const goHome = () => {
         router.push('/');
     };
+
 
     return (
         <>
@@ -101,18 +119,55 @@ const Register: Page = () => {
                                         type="text"
                                         autoComplete="off"
                                         required
-                                        placeholder="Username"
+                                        placeholder="firstname"
+                                        name="firstname"
+                                        value={formData.firstname}
+                                        onChange={handleChange}
                                         className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-700'}`}
                                         style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
                                     />
                                 </span>
+
+                                <span className="p-input-icon-left">
+                                    <i className="pi pi-user text-primary"></i>
+                                    <InputText
+                                        type="text"
+                                        autoComplete="off"
+                                        required
+                                        placeholder="lastname"
+                                        name="lastname"
+                                        value={formData.lastname}
+                                        onChange={handleChange}
+                                        className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-700'}`}
+                                        style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
+                                    />
+                                </span>
+
+                                <span className="p-input-icon-left">
+                                    <i className="pi pi-user text-primary"></i>
+                                    <InputText
+                                        type="text"
+                                        autoComplete="off"
+                                        required
+                                        placeholder="Username"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleChange}
+                                        className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-700'}`}
+                                        style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
+                                    />
+                                </span>
+
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-envelope text-primary"></i>
                                     <InputText
                                         type="email"
                                         autoComplete="off"
                                         required
-                                        placeholder="Email"
+                                        placeholder="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-700'}`}
                                         style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
                                     />
@@ -120,11 +175,13 @@ const Register: Page = () => {
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-key text-primary"></i>
                                     <InputText
-
                                         type="password"
                                         autoComplete="off"
                                         required
                                         placeholder="Password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
                                         className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-700'}`}
                                         style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
                                     />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -12,11 +12,24 @@ import { Tooltip } from 'primereact/tooltip';
 const Login: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
+    const [credencials, setCredencials] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setCredencials({
+            ...credencials,
+            [name]: value
+        });
+    };
 
     const goHome = () => {
         router.push('/');
     };
 
+    console.log(credencials);
     return (
         <React.Fragment>
             <div
@@ -70,11 +83,25 @@ const Login: Page = () => {
                             <div className="form-container">
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-envelope text-primary"></i>
-                                    <InputText type="text" placeholder="Email" className={`block mb-4 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`} style={{ maxWidth: '340px', minWidth: '270px' }} />
+                                    <InputText
+                                        type="text"
+                                        name="email"
+                                        onChange={handleChange}
+                                        placeholder="Email"
+                                        className={`block mb-4 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`}
+                                        style={{ maxWidth: '340px', minWidth: '270px' }}
+                                    />
                                 </span>
                                 <span className="p-input-icon-left">
                                     <i className="pi pi-key text-primary"></i>
-                                    <InputText type="password" placeholder="Password" className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`} style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <InputText
+                                        type="password"
+                                        name="password"
+                                        onChange={handleChange}
+                                        placeholder="Password"
+                                        className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`}
+                                        style={{ maxWidth: '320px', minWidth: '270px' }}
+                                    />
                                 </span>
                                 <a href="/auth/forgotpassword" className="flex mb-4 text-md font-semibold text-gray-50 hover:text-primary">
                                     Forgot your password?
