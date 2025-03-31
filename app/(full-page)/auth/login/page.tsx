@@ -1,16 +1,49 @@
 'use client';
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Page } from '../../../../types/layout';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
+import { Tooltip } from 'primereact/tooltip';
+import Link from 'next/link';
+import axios from 'axios';
+import { User } from '@/app/core/models/user.model';
+import { loginUser } from '@/app/core/services/user.service';
+
 
 const Login: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
+    const [credencials, setCredencials] = useState<User>({
+        email: '',
+        password: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setCredencials({
+            ...credencials,
+            [name]: value
+        });
+    };
+
+    const goHome = () => {
+        router.push('/');
+    };
+
+    const handleSubmit = async () => {
+        try {
+            await loginUser(credencials)
+            router.push('/')
+        } catch (error) {
+            console.log('error', error)
+        }
+
+    }
+
 
     return (
         <React.Fragment>
@@ -21,48 +54,104 @@ const Login: Page = () => {
                 })}
             >
                 {' '}
-                <div className="login-image w-6 hidden h-screen md:block" style={{ maxWidth: '490px' }}>
+                {/* image container */}
+                {/* <div className="login-image w-full hidden h-screen md:block">
                     <img src={`/layout/images/pages/login-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png`} alt="atlantis" className="h-screen w-full" />
-                </div>
-                <div className="login-panel w-full" style={{ background: 'var(--surface-ground)' }}>
+                </div> */}
+                {/* form container */}
+                <div
+                    className="login-panel w-full  md:block"
+                    style={{
+                        backgroundImage: `url(/layout/images/pages/login-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                >
                     <div
-                        className="p-fluid min-h-screen bg-auto md:bg-contain bg-no-repeat text-center w-full flex align-items-center md:align-items-start justify-content-center flex-column bg-auto md:bg-contain bg-no-repeat"
-                        style={{ padding: '20% 10% 20% 10%', background: 'var(--exception-pages-image)' }}
+                        className="p-fluid min-h-screen text-center
+                          flex align-items-center md:align-items-center px-2 py-3
+                          justify-content-center m-auto flex-column"
                     >
-                        <div className="flex flex-column">
-                            <div className="flex  align-items-center mb-6 logo-container">
-                                <img src={`/layout/images/logo/logo-${layoutConfig.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="login-logo" style={{ width: '45px' }} alt="logo" />
-                                <img src={`/layout/images/logo/appname-${layoutConfig.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="login-appname ml-3" style={{ width: '100px' }} alt="appname" />
+                        <div
+                            className="flex flex-column w-full justify-content-center align-items-center px-3 py-3 lg:px-5 lg:py-5"
+                            style={{ borderRadius: '14px', backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.30)' : 'rgba(107, 114, 128, 0.80)', maxWidth: '350px' }}
+                        >
+                            <div className="relative w-full" style={{ userSelect: 'none' }}>
+                                <Button
+                                    className="absolute left-4 text-primary top-1/2 transform -translate-y-1/2 flex align-items-center justify-content-center bg-transparent border-none"
+                                    style={{ width: '30px', height: '30px' }}
+                                    icon="pi pi-home"
+                                    data-pr-tooltip="Home"
+                                    data-pr-position="right"
+                                    pt={{ icon: { style: { fontSize: '1.2rem' } } }}
+                                    onClick={goHome}
+                                ></Button>
+
+                                <Tooltip target=".absolute.left-4" />
                             </div>
+                            <div className="flex align-items-center mb-5 logo-container ">
+                                <p className="text-3xl font-italic mr-3 font-bold" style={{ color: '#0bd18a' }}>
+                                    CARS-DR
+                                </p>
+                            </div>
+
                             <div className="form-container">
                                 <span className="p-input-icon-left">
-                                    <i className="pi pi-envelope"></i>
-                                    <InputText type="text" placeholder="Email" className="block mb-3" style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <i className="pi pi-envelope text-primary"></i>
+                                    <InputText
+                                        type="text"
+                                        name="email"
+                                        onChange={handleChange}
+                                        placeholder="Email"
+                                        className={`block mb-4 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`}
+                                        style={{ maxWidth: '340px', minWidth: '270px' }}
+                                    />
                                 </span>
                                 <span className="p-input-icon-left">
-                                    <i className="pi pi-key"></i>
-                                    <InputText type="password" placeholder="Password" className="block mb-3" style={{ maxWidth: '320px', minWidth: '270px' }} />
+                                    <i className="pi pi-key text-primary"></i>
+                                    <InputText
+                                        type="password"
+                                        name="password"
+                                        onChange={handleChange}
+                                        placeholder="Password"
+                                        className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`}
+                                        style={{ maxWidth: '320px', minWidth: '270px' }}
+                                    />
                                 </span>
-                                <a href="#" className="flex text-color-secondary mb-4 text-sm">
+                                <a href="/auth/forgotpassword" className="flex mb-4 text-md font-semibold text-gray-50 hover:text-primary">
                                     Forgot your password?
                                 </a>
                             </div>
                             <div className="button-container">
-                                <Button type="button" onClick={() => router.push('/')} className="block" style={{ maxWidth: '320px', marginBottom: '32px' }}>
+                                <Button
+                                    type="button"
+                                    onClick={handleSubmit}
+                                    outlined
+                                    className={`block font-bold hover:bg-primary
+                                     line-height-2 
+                                     hover:text-white white-space-nowrap
+                                     text-white
+                                    `}
+                                    style={{ maxWidth: '320px', marginBottom: '20px' }}
+                                >
                                     Login
                                 </Button>
-                                <span className="flex text-sm text-color-secondary">
-                                    Don’t have an account?<a className="cursor-pointer ml-1">Sign-up here</a>
+
+                                <span className={`flex text-md mb-1 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-white'}`}>
+                                    Don’t have an account?
+                                    <Link className="cursor-pointer ml-1 text-md text-white hover:text-primary" href="/auth/register">
+                                        Sign-up here
+                                    </Link>
                                 </span>
                             </div>
-                        </div>
 
-                        <div className="login-footer flex align-items-center absolute" style={{ bottom: '75px' }}>
-                            <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 surface-border">
-                                <img src="/layout/images/logo/logo-gray.png" className="login-footer-logo" style={{ width: '22px' }} alt="logo" />
-                                <img src="/layout/images/logo/appname-gray.png" className="login-footer-appname ml-2" style={{ width: '45px' }} alt="appname" />
+                            <div className="login-footer flex align-items-center text-white mt-2" style={{ bottom: '75px' }}>
+                                <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 surface-border">
+                                    <p className="text-sm text-primary font-bold mr-3 ">CARSDR</p>
+                                </div>
+
+                                <span className="text-sm mr-3 text-primary font-bold">&copy; Copyright 2025</span>
                             </div>
-                            <span className="text-sm text-color-secondary mr-3">Copyright 2023</span>
                         </div>
                     </div>
                 </div>

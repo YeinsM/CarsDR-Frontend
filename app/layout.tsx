@@ -6,14 +6,15 @@ import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
+import { poppins } from '../styles/layout/fonts/fonts';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <link id="theme-link" href={`/theme/theme-dark/magenta/theme.css`} rel="stylesheet"></link>
+                <link id="theme-link" href={`/theme/theme-light/green/theme.css`} rel="stylesheet"></link>
             </head>
-            <body>
+            <body className={`${poppins.className} antialiased`}>
                 <PrimeReactProvider>
                     <LayoutProvider>{children}</LayoutProvider>
                 </PrimeReactProvider>
