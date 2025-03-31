@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -8,11 +8,16 @@ import { Page } from '../../../../types/layout';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
 import { Tooltip } from 'primereact/tooltip';
+import Link from 'next/link';
+import axios from 'axios';
+import { User } from '@/app/core/models/user.model';
+import { loginUser } from '@/app/core/services/user.service';
+
 
 const Login: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
-    const [credencials, setCredencials] = useState({
+    const [credencials, setCredencials] = useState<User>({
         email: '',
         password: ''
     });
@@ -29,7 +34,17 @@ const Login: Page = () => {
         router.push('/');
     };
 
-    console.log(credencials);
+    const handleSubmit = async () => {
+        try {
+            await loginUser(credencials)
+            router.push('/')
+        } catch (error) {
+            console.log('error', error)
+        }
+
+    }
+
+
     return (
         <React.Fragment>
             <div
@@ -110,7 +125,7 @@ const Login: Page = () => {
                             <div className="button-container">
                                 <Button
                                     type="button"
-                                    onClick={() => router.push('/')}
+                                    onClick={handleSubmit}
                                     outlined
                                     className={`block font-bold hover:bg-primary
                                      line-height-2 
@@ -124,9 +139,9 @@ const Login: Page = () => {
 
                                 <span className={`flex text-md mb-1 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-white'}`}>
                                     Don’t have an account?
-                                    <a className="cursor-pointer ml-1 text-md text-white hover:text-primary" href="/auth/register">
+                                    <Link className="cursor-pointer ml-1 text-md text-white hover:text-primary" href="/auth/register">
                                         Sign-up here
-                                    </a>
+                                    </Link>
                                 </span>
                             </div>
 

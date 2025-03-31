@@ -10,20 +10,31 @@ import { Page } from '../../../../types/layout';
 import { classNames } from 'primereact/utils';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { Tooltip } from 'primereact/tooltip';
+import axios from "axios";
+import Link from 'next/link';
+import { promises } from 'dns';
+import { registerUser } from '@/app/core/services/user.service';
+import { User } from '@/app/core/models/user.model';
 
 const Register: Page = () => {
-    const [confirmed, setConfirmed] = useState(false);
+    //const [confirmed, setConfirmed] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
+    const api = axios.create({
+        baseURL: 'http://44.208.165.188:1000/api',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
 
-    const [formData, setFormData] = useState({
+
+    const [formData, setFormData] = useState<User>({
         firstname: '',
         lastname: '',
         username: '',
         email: '',
-        password: '',
-        confirmed: false
+        password: ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,9 +45,21 @@ const Register: Page = () => {
         });
     };
 
+
     const goHome = () => {
         router.push('/');
     };
+
+    const handleSubmit = async () => {
+        try {
+            await registerUser(formData)
+            router.push('/auth/login')
+        } catch (error) {
+            console.log('error', error)
+        }
+
+    }
+
 
 
     return (
@@ -125,6 +148,7 @@ const Register: Page = () => {
                                         onChange={handleChange}
                                         className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? 'bg-gray-700' : 'bg-gray-700'}`}
                                         style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}
+
                                     />
                                 </span>
 
@@ -187,7 +211,7 @@ const Register: Page = () => {
                                     />
                                 </span>
                                 <div className="mt-2 flex flex-wrap text-sm">
-                                    <Checkbox type="checkbox" id="confirmed" checked={confirmed} onChange={() => setConfirmed(!confirmed)} className="mr-2" />{' '}
+                                    {/* <Checkbox type="checkbox" id="confirmed" checked={'confirmed'} onChange={() => setConfirmed(!confirmed)} className="mr-2" />{' '} */}
                                     <label htmlFor="confirmed" className={`font-medium mr-2 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50 '}`}>
                                         I have read the
                                     </label>
@@ -196,15 +220,18 @@ const Register: Page = () => {
                             </div>
                             <div className="button-container mt-3 text-left" style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}>
                                 <div className="buttons flex align-items-center justify-content-center gap-3 w-full">
-                                    <Button type="button" className="block w-full" style={{ maxWidth: '270px', marginBottom: '20px', minWidth: '270px' }}>
+                                    <Button
+                                        onClick={handleSubmit}
+                                        type="button" className="block w-full"
+                                        style={{ maxWidth: '270px', marginBottom: '20px', minWidth: '270px' }}>
                                         Submit
                                     </Button>
                                 </div>
-                                <span className={`font-medium flex align-items-center justify-content-center gap-2 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>
+                                <span className={`font-medium text-sm flex align-items-center justify-content-center gap-1 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>
                                     Already have an account?{' '}
-                                    <a href="/auth/login" className={`${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-50'} font-semibold cursor-pointer hover:text-primary transition-colors transition-duration-300 `}>
+                                    <Link href="/auth/login" className={`${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-50'} font-semibold cursor-pointer hover:text-primary transition-colors transition-duration-300 `}>
                                         Login
-                                    </a>
+                                    </Link>
                                 </span>
                             </div>
 
