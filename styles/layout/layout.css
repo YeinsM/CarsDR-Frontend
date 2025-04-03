@@ -1476,3 +1476,7 @@ p:last-child {
     top: 70px;
 }
 
+.p-toast.opacity-enter {
+    opacity: 1;
+}
+

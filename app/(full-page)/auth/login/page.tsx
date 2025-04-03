@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -9,12 +9,14 @@ import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
 import { Tooltip } from 'primereact/tooltip';
 import Link from 'next/link';
-import axios from 'axios';
 import { User } from '@/app/core/models/user.model';
 import { loginUser } from '@/app/core/services/user.service';
+import { Toast } from 'primereact/toast';
+import { StyleClass } from 'primereact/styleclass';
 
 
 const Login: Page = () => {
+    const toast = useRef(null);
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
     const [credencials, setCredencials] = useState<User>({
@@ -36,7 +38,10 @@ const Login: Page = () => {
 
     const handleSubmit = async () => {
         try {
-            await loginUser(credencials)
+            const login = await loginUser(credencials)
+            if (login.status === 200) {
+                toast.current.show({ severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 3000 }, );
+            }
             router.push('/')
         } catch (error) {
             console.log('error', error)
