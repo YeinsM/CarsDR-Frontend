@@ -26,9 +26,11 @@ const Dashboard = () => {
     const toast = useRef(null);
 
     const showSuccess = () => {
-        toast.current.show({ severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 3000, contentStyle: {'backgroundColor': '#FFF', 'color': '#FFFFFF', 'opacity': '1'}  });
+        toast.current.show({
+            severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 5000,
+        });
     }
-    
+
     const [visitorChartOptions, setVisitorChartOptions] = useState<ChartOptions | null>(null);
     const [countryChartOptions, setCountryChartOptions] = useState<ChartOptions | null>(null);
     const [revenueChartOptions, setRevenueChartOptions] = useState<ChartOptions | null>(null);
@@ -773,7 +775,7 @@ const Dashboard = () => {
 
     return (
         <div className="grid">
-            <Toast ref={toast}></Toast>
+            <Toast ref={toast} className='text-primary' />
             <div className="col-12 md:col-4">
                 <div className="card relative h-6rem border-round-xl p-3">
                     <span className="text-sm font-medium line-height-1">CONVERSATION RATE</span>

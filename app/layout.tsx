@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 <link id="theme-link" href={`/theme/theme-light/green/theme.css`} rel="stylesheet"></link>
             </head>
-            <body>
+            <body className='h-screen'>
                 {/* <PrimeReactProvider value={{ unstyled: true, pt: {} }}> */}
                 <PrimeReactProvider>
                     <LayoutProvider>{children}</LayoutProvider>

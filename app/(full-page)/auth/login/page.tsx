@@ -11,8 +11,6 @@ import { Tooltip } from 'primereact/tooltip';
 import Link from 'next/link';
 import { User } from '@/app/core/models/user.model';
 import { loginUser } from '@/app/core/services/user.service';
-import { Toast } from 'primereact/toast';
-import { StyleClass } from 'primereact/styleclass';
 
 
 const Login: Page = () => {
