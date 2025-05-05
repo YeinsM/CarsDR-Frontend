@@ -215,7 +215,7 @@ const Register: Page = () => {
                                     <label htmlFor="confirmed" className={`font-medium mr-2 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50 '}`}>
                                         I have read the
                                     </label>
-                                    <a className={`cursor-pointer hover:text-primary cursor-pointer ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>Terms and Conditions</a>
+                                    <a className={`hover:text-primary cursor-pointer ${layoutConfig.colorScheme === 'dark' ? '' : 'text-50'}`}>Terms and Conditions</a>
                                 </div>
                             </div>
                             <div className="button-container mt-3 text-left" style={{ width: '100%', maxWidth: '320px', minWidth: '270px' }}>

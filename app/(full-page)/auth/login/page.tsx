@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -11,6 +11,7 @@ import { Tooltip } from 'primereact/tooltip';
 import Link from 'next/link';
 import { User } from '@/app/core/models/user.model';
 import { loginUser } from '@/app/core/services/user.service';
+import { AxiosToastError } from '@/app/api/Api';
 
 
 const Login: Page = () => {
@@ -38,11 +39,16 @@ const Login: Page = () => {
         try {
             const login = await loginUser(credencials)
             if (login.status === 200) {
-                toast.current.show({ severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 3000 }, );
+                toast.current.show({
+                    severity: 'success',
+                    summary: '¡Sesión iniciada satisfactoriamente!',
+                    life: 3000,
+                });
+                router.push('/');
             }
-            router.push('/')
         } catch (error) {
-            console.log('error', error)
+            AxiosToastError(error, toast);
+            console.log('error', error);
         }
 
     }

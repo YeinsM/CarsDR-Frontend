@@ -4,17 +4,29 @@ import AppSubMenu from './AppSubMenu';
 const AppMenu = () => {
     const model: MenuModal[] = [
         {
-            label: 'Dashboards',
-            icon: 'pi pi-home',
+            label: 'home',
+            icon: 'pi pi-fw pi-home',
+            to: '/pages/home'
+
+        },
+        { separator: true },
+        { // profile
+            label: 'profiles',
+            icon: 'pi pi-users',
             items: [
                 {
-                    label: 'Home',
-                    icon: 'pi pi-fw pi-home',
-                    to: '/pages/home'
+                    label: 'Roles',
+                    icon: 'pi pi-fw pi-unlock',
+                    to: '/profile/role'
+                },
+                { separator: true },
+                {
+                    label: 'List Customers',
+                    icon: 'pi pi-fw pi-list',
+                    to: '/profile/list'
                 }
             ]
-        },
-        { separator: true }
+        }
     ];
 
     return <AppSubMenu model={model} />;

@@ -1,6 +1,5 @@
 import React from 'react';
 import CarSearch from '../../components/CarSearch';
-import ApplicantInfo from '../../components/ApplicantInfo';
 
 const Page = () => {
     return (
@@ -34,10 +33,10 @@ const Page = () => {
                 <div className="flex-1 w-full bg-white flex flex-col py-4 px-4 rounded-md overflow-hidden h-full">
                     <h2 className="font-bold mb-4">Recientes</h2>
                     <div className="grid grid-cols-6 gap-4 p-3">
-                        {[...Array(20)].map((_, index) => (
-                            <div key={index} className="bg-gray-300 w-full max-w-44 h-48 p-2 rounded-md shadow">
+                        {[...Array(10)].map((_, index) => (
+                            <div key={index} className="bg-gray-300 w-full max-w-40 sm:max-w-44 h-48 p-2 rounded-md shadow">
                                 {/* Área de imagen o contenido visual */}
-                                <div className="bg-amber-400 h-24 w-40 rounded-md mb-1"></div>
+                                <div className="bg-amber-400 h-24 sm:w-40 w-36 rounded-md mb-1"></div>
                                 {/* Título */}
                                 <div>
                                     <div className='w-full p-0 m-0'>
