@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
@@ -12,7 +12,6 @@ import Link from 'next/link';
 import { User } from '@/app/core/models/user.model';
 import { loginUser } from '@/app/core/services/user.service';
 import { AxiosToastError } from '@/app/api/Api';
-
 
 const Login: Page = () => {
     const toast = useRef(null);
@@ -37,135 +36,77 @@ const Login: Page = () => {
 
     const handleSubmit = async () => {
         try {
-            const login = await loginUser(credencials)
+            const login = await loginUser(credencials);
             if (login.status === 200) {
-                toast.current.show({
-                    severity: 'success',
-                    summary: '¡Sesión iniciada satisfactoriamente!',
-                    life: 3000,
-                });
-                router.push('/');
+                toast.current.show({ severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 3000 });
             }
+            router.push('/');
         } catch (error) {
             AxiosToastError(error, toast);
-            console.log('error', error);
         }
-
-    }
-
+    };
 
     return (
-        <React.Fragment>
+        <div
+            className={classNames('login-body flex min-h-screen', {
+                'layout-light': layoutConfig.colorScheme === 'light',
+                'layout-dark': layoutConfig.colorScheme === 'dark'
+            })}
+        >
             <div
-                className={classNames('login-body', 'flex', 'min-h-screen', {
-                    'layout-light': layoutConfig.colorScheme === 'light',
-                    'layout-dark': layoutConfig.colorScheme === 'dark'
-                })}
+                className="w-full bg-cover bg-center h-full p-2 sm:p-0"
+                style={{
+                    backgroundImage: `url(/layout/images/pages/login-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png)`
+                }}
             >
-                {' '}
-                {/* image container */}
-                {/* <div className="login-image w-full hidden h-screen md:block">
-                    <img src={`/layout/images/pages/login-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png`} alt="atlantis" className="h-screen w-full" />
-                </div> */}
-                {/* form container */}
-                <div
-                    className="login-panel w-full  md:block"
-                    style={{
-                        backgroundImage: `url(/layout/images/pages/login-${layoutConfig.colorScheme === 'dark' ? 'ondark' : 'onlight'}.png)`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}
-                >
-                    <div
-                        className="p-fluid min-h-screen text-center
-                          flex align-items-center md:align-items-center px-2 py-3
-                          justify-content-center m-auto flex-column"
-                    >
-                        <div
-                            className="flex flex-column w-full justify-content-center align-items-center px-3 py-3 lg:px-5 lg:py-5"
-                            style={{ borderRadius: '14px', backgroundColor: layoutConfig.colorScheme === 'dark' ? 'rgba(107, 114, 128, 0.30)' : 'rgba(107, 114, 128, 0.80)', maxWidth: '350px' }}
-                        >
-                            <div className="relative w-full" style={{ userSelect: 'none' }}>
-                                <Button
-                                    className="absolute left-4 text-primary top-1/2 transform -translate-y-1/2 flex align-items-center justify-content-center bg-transparent border-none"
-                                    style={{ width: '30px', height: '30px' }}
-                                    icon="pi pi-home"
-                                    data-pr-tooltip="Home"
-                                    data-pr-position="right"
-                                    pt={{ icon: { style: { fontSize: '1.2rem' } } }}
-                                    onClick={goHome}
-                                ></Button>
+                <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+                    <div className="w-full max-w-md sm:max-w-md bg-white/70 dark:bg-gray-700/70 p-3 sm:px-5 sm:py-3 rounded-2xl shadow-lg flex flex-col items-center">
+                        <div className="relative w-full">
+                            <Button className="absolute left-2 top-2 bg-transparent text-primary border-none" icon="pi pi-home" data-pr-tooltip="Home" data-pr-position="right" pt={{ icon: { style: { fontSize: '1.5rem' } } }} onClick={goHome} />
+                            <Tooltip target=".absolute.left-2" />
+                        </div>
 
-                                <Tooltip target=".absolute.left-4" />
-                            </div>
-                            <div className="flex align-items-center mb-5 logo-container ">
-                                <p className="text-3xl font-italic mr-3 font-bold" style={{ color: '#0bd18a' }}>
-                                    CARS-DR
-                                </p>
-                            </div>
+                        <div className="text-center mt-2 mb-3">
+                            <p className="text-3xl font-bold italic text-[#0bd18a]">CARS-DR</p>
+                        </div>
 
-                            <div className="form-container">
-                                <span className="p-input-icon-left">
-                                    <i className="pi pi-envelope text-primary"></i>
-                                    <InputText
-                                        type="text"
-                                        name="email"
-                                        onChange={handleChange}
-                                        placeholder="Email"
-                                        className={`block mb-4 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`}
-                                        style={{ maxWidth: '340px', minWidth: '270px' }}
-                                    />
-                                </span>
-                                <span className="p-input-icon-left">
-                                    <i className="pi pi-key text-primary"></i>
-                                    <InputText
-                                        type="password"
-                                        name="password"
-                                        onChange={handleChange}
-                                        placeholder="Password"
-                                        className={`block mb-3 text-white ${layoutConfig.colorScheme === 'dark' ? '' : 'bg-gray-800'}`}
-                                        style={{ maxWidth: '320px', minWidth: '270px' }}
-                                    />
-                                </span>
-                                <a href="/auth/forgotpassword" className="flex mb-4 text-md font-semibold text-gray-50 hover:text-primary">
-                                    Forgot your password?
-                                </a>
-                            </div>
-                            <div className="button-container">
-                                <Button
-                                    type="button"
-                                    onClick={handleSubmit}
-                                    outlined
-                                    className={`block font-bold hover:bg-primary
-                                     line-height-2 
-                                     hover:text-white white-space-nowrap
-                                     text-white
-                                    `}
-                                    style={{ maxWidth: '320px', marginBottom: '20px' }}
-                                >
-                                    Login
-                                </Button>
+                        <div className="w-full text-left px-2">
+                            <h4 className="text-xl font-semibold text-[#0bd18a] mb-2">Login</h4>
+                            <p className={`mb-4 text-sm ${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-gray-200'}`}>Let’s get started</p>
 
-                                <span className={`flex text-md mb-1 ${layoutConfig.colorScheme === 'dark' ? '' : 'text-white'}`}>
-                                    Don’t have an account?
-                                    <Link className="cursor-pointer ml-1 text-md text-white hover:text-primary" href="/auth/register">
-                                        Sign-up here
-                                    </Link>
-                                </span>
-                            </div>
-
-                            <div className="login-footer flex align-items-center text-white mt-2" style={{ bottom: '75px' }}>
-                                <div className="flex align-items-center login-footer-logo-container pr-4 mr-4 border-right-1 surface-border">
-                                    <p className="text-sm text-primary font-bold mr-3 ">CARSDR</p>
+                            {/* Fields Section */}
+                            <div className="space-y-4 px-2">
+                                <div className="flex flex-col gap-4">
+                                    <span className="p-input-icon-left w-full">
+                                        <i className="pi pi-user text-primary"></i>
+                                        <InputText name="email" placeholder="Email or Username" value={credencials.email} onChange={handleChange} className="w-full bg-gray-100" />
+                                    </span>
+                                    <span className="p-input-icon-left w-full">
+                                        <i className="pi pi-key text-primary"></i>
+                                        <InputText type="password" name="password" placeholder="Password" value={credencials.password} onChange={handleChange} className="w-full bg-gray-100" />
+                                    </span>
                                 </div>
-
-                                <span className="text-sm mr-3 text-primary font-bold">&copy; Copyright 2025</span>
                             </div>
+
+                            <div className="mt-4 px-4">
+                                <Button onClick={handleSubmit} label="Submit" type="button" className="w-full" />
+                            </div>
+
+                            <p className={`mt-2 text-sm text-center ${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-gray-200'}`}>
+                                Don’t have an account?
+                                <Link href="/auth/login" className="ml-2 text-primary font-medium hover:underline">
+                                    Sign-up here
+                                </Link>
+                            </p>
+                        </div>
+
+                        <div className="mt-4 text-sm text-primary text-center">
+                            <span className="mr-2">CARSDR</span> &copy; 2025
                         </div>
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </div>
     );
 };
 
