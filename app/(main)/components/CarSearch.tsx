@@ -64,7 +64,7 @@ const CarSearch = () => {
     };
 
     return (
-        <div className="flex md:flex-row flex-col w-full h-full gap-2 bg-amber-400 overflow-hidde">
+        <div className="flex md:flex-row flex-col w-full h-full gap-2 overflow-hidde">
             {/* Sidebar de filtros */}
             <div className="md:max-w-[300px] w-full surface-card py-4 px-3 shadow-2 border-round overflow-hidden">
                 <h2 className="text-xl font-bold mb-2">¡Busca tu Carro!</h2>

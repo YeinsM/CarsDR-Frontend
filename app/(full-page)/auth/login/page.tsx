@@ -94,7 +94,7 @@ const Login: Page = () => {
 
                             <p className={`mt-2 text-sm text-center ${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-gray-200'}`}>
                                 Don’t have an account?
-                                <Link href="/auth/login" className="ml-2 text-primary font-medium hover:underline">
+                                <Link href="/auth/register" className="ml-2 text-primary font-medium hover:underline">
                                     Sign-up here
                                 </Link>
                             </p>

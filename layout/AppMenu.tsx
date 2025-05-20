@@ -24,7 +24,13 @@ const AppMenu = () => {
                     label: 'List Customers',
                     icon: 'pi pi-fw pi-list',
                     to: '/profile/list'
-                }
+                },
+                { separator: true },
+                {
+                    label: 'Modulos',
+                    icon: 'pi pi-th-large',
+                    to: '/profile/module'
+                },
             ]
         }
     ];

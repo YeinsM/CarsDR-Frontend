@@ -15,6 +15,7 @@ export const loginUser = async (user: User) => {
 }
 
 export const registerUser = async (user: User) => {
+    console.log('users register service',user)
     const response = await Api.post('/Users/register', user)
     return response.data
 }

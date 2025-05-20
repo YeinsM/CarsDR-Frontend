@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { useRouter } from 'next/navigation';
@@ -8,13 +8,15 @@ import { Page } from '../../../../types/layout';
 import { classNames } from 'primereact/utils';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { Tooltip } from 'primereact/tooltip';
-import { registerUser } from '@/app/core/services/user.service';
 import { User } from '@/app/core/models/user.model';
 import { AxiosToastError } from '@/app/api/Api';
 import Link from 'next/link';
 import { Dropdown } from 'primereact/dropdown';
 import UserExtraFields from '@/app/(main)/components/UserExtraFields';
 import { Checkbox } from 'primereact/checkbox';
+import { getRoles } from '@/app/core/services/role.service';
+import { registerUser } from '@/app/core/services/user.service';
+
 
 const Register: Page = () => {
     const toast = useRef(null);
@@ -22,6 +24,7 @@ const Register: Page = () => {
     const router = useRouter();
     const [selectedUserType, setSelectedUserType] = useState(null);
     const [selectCountry, setSelectCountrye] = useState(null);
+    const [roles, setRoles] = useState([]);
 
     const [confirmed, setConfirmed] = useState(false);
 
@@ -31,18 +34,31 @@ const Register: Page = () => {
         username: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        roleId: '',
+        cellPhone: '',
+        address: '',             
     });
 
-    const typeUser = [
-        { label: 'Selecciona rol', value: '' },
-        { label: 'Usuario', value: 'Usuario' },
-        { label: 'Delear', value: 'Delear' },
-        { label: 'Banco', value: 'Banco' },
-        { label: 'Invitado', value: 'Invitado' }
-    ];
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const data = await getRoles();
+                const formattedRoles = data.map((role: any) => ({
+                    label: role.name,
+                    value: role.id,
 
-    const  selecttCountry = [
+                }));
+                setRoles(formattedRoles);
+            } catch (error) {
+                console.error("Error fetching roles:", error);
+            }
+        };
+
+        fetchRoles();
+    }, []);
+
+
+    const selecttCountry = [
         { label: 'Selecciona Pais', value: '' },
         { label: 'Dominican Republic', value: 'Dominican Republic' },
         { label: 'Colombia', value: 'colombia' },
@@ -58,16 +74,32 @@ const Register: Page = () => {
     };
 
     const handleSubmit = async () => {
+      
         if (formData.password !== formData.confirmPassword) {
             AxiosToastError({ message: 'Passwords do not match' }, toast);
             return;
         }
 
         try {
-            const { confirmPassword, ...userData } = formData;
-           // await registerUser(userData);
-           // router.push('/auth/login');
-           console.log("data de registro ", userData)
+            const { confirmPassword, ...userData } = formData;           
+
+            console.log("data de registro ", userData)
+            const response = await registerUser(userData);
+            if (response.status === 200) {
+                router.push('/auth/login');
+            }
+            setFormData({
+                firstname: '',
+                lastname: '',
+                username: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                roleId: '',
+                cellPhone: '',
+            });
+
+            console.log("data de registro ", userData)
         } catch (error) {
             AxiosToastError(error, toast);
         }
@@ -119,7 +151,17 @@ const Register: Page = () => {
                                         <Dropdown options={selecttCountry} placeholder="Seleccione Pais" value={selectCountry} onChange={(e) => setSelectCountrye(e.value)} className="w-full bg-gray-100" />
                                     </span>
                                     <span className="p-input-icon-left w-full">
-                                        <Dropdown options={typeUser} placeholder="Seleccione Rol" value={selectedUserType} onChange={(e) => setSelectedUserType(e.value)} className="w-full bg-gray-100" />
+                                        <Dropdown
+                                            options={roles}
+                                            placeholder="Seleccione Rol"
+                                            value={formData.roleId}
+                                            onChange={(e) => {
+                                                const selectedRole = roles.find((role: any) => role.value === e.value);
+                                                setFormData({ ...formData, roleId: e.value });
+                                                setSelectedUserType(selectedRole?.label || null);
+                                            }}
+                                            className="w-full bg-gray-100"
+                                        />
                                     </span>
                                 </div>
 
@@ -135,12 +177,12 @@ const Register: Page = () => {
                             </div>
 
                             <div className="mt-4 px-6">
-                                <Button onClick={handleSubmit} label="Submit" type="button" className="w-full" />
+                                <Button onClick={handleSubmit} label="Submit" className="w-full" />
                             </div>
 
                             <p className={`mt-2 text-sm text-center ${layoutConfig.colorScheme === 'dark' ? 'text-white' : 'text-gray-200'}`}>
                                 Already have an account?
-                                <Link href="/auth/login" className="text-primary font-medium hover:underline">
+                                <Link href="/auth/login" className="ml-1 text-primary font-medium hover:underline">
                                     Login
                                 </Link>
                             </p>
