@@ -18,7 +18,7 @@ const Login: Page = () => {
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
     const [credencials, setCredencials] = useState<User>({
-        email: '',
+        emailOrUsername: '',
         password: ''
     });
 
@@ -38,9 +38,8 @@ const Login: Page = () => {
         try {
             const login = await loginUser(credencials);
             if (login.status === 200) {
-                toast.current.show({ severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 3000 });
+                router.push('/');
             }
-            router.push('/');
         } catch (error) {
             AxiosToastError(error, toast);
         }
@@ -79,7 +78,7 @@ const Login: Page = () => {
                                 <div className="flex flex-col gap-4">
                                     <span className="p-input-icon-left w-full">
                                         <i className="pi pi-user text-primary"></i>
-                                        <InputText name="email" placeholder="Email or Username" value={credencials.email} onChange={handleChange} className="w-full bg-gray-100" />
+                                        <InputText name="emailOrUsername" type='text' placeholder="Email or Username" value={credencials.emailOrUsername} onChange={handleChange} className="w-full bg-gray-100" />
                                     </span>
                                     <span className="p-input-icon-left w-full">
                                         <i className="pi pi-key text-primary"></i>

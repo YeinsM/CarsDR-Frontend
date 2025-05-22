@@ -36,7 +36,7 @@ const Register: Page = () => {
         password: '',
         roleId: '',
         cellPhone: '',
-        address: '',             
+        address: '',
     });
 
     useEffect(() => {
@@ -73,15 +73,16 @@ const Register: Page = () => {
         router.push('/');
     };
 
-    const handleSubmit = async () => {
-      
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
         if (formData.password !== formData.confirmPassword) {
             AxiosToastError({ message: 'Passwords do not match' }, toast);
             return;
         }
 
         try {
-            const { confirmPassword, ...userData } = formData;           
+            const { confirmPassword, ...userData } = formData;
 
             console.log("data de registro ", userData)
             const response = await registerUser(userData);

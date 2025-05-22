@@ -11,4 +11,5 @@ export interface User {
     address?: string;
     businessId?: string;
     rnc?: string;
+    emailOrUsername?: string;
 }
