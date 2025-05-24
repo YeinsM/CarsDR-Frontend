@@ -11,7 +11,7 @@ export const AxiosToastError = (err, toastRef) => {
     toastRef.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: err?.response?.data?.message || 'Ocurrió un error',
+        detail: err || 'Ocurrió un error',
         life: 3000,
     });
 };

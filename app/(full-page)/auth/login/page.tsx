@@ -40,7 +40,7 @@ const Login: Page = () => {
             if (login.status === 200) {
                 router.push('/');
             }
-        } catch (error) {
+        } catch (error) {            
             AxiosToastError(error, toast);
         }
     };
