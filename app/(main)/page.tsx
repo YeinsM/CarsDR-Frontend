@@ -27,7 +27,10 @@ const Dashboard = () => {
 
     const showSuccess = () => {
         toast.current.show({
-            severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 5000,
+            severity: 'success',
+            summary: 'Sesión iniciada satisfactoriamente!',
+            life: 5000,
+            style: { background: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px' }
         });
     }
 
@@ -775,7 +778,7 @@ const Dashboard = () => {
 
     return (
         <div className="grid">
-            <Toast ref={toast} className='text-primary' />
+            <Toast ref={toast} />
             <div className="col-12 md:col-4">
                 <div className="card relative h-6rem border-round-xl p-3">
                     <span className="text-sm font-medium line-height-1">CONVERSATION RATE</span>

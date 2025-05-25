@@ -1,5 +1,6 @@
 import React from 'react';
 import CarSearch from '../../components/CarSearch';
+import AdSpace from '../../components/AdSpace';
 
 const Page = () => {
     return (
@@ -7,18 +8,9 @@ const Page = () => {
             {/* Columna izquierda */}
             <div className="w-full md:max-w-[200px] h-full flex items-center justify-center rounded-md p-0">
                 <div className="flex flex-col gap-2 w-full h-screen items-center justify-between p-1 border rounded-md">
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
+                    {[...Array(4)].map((_, index) => (
+                        <AdSpace key={`left-ad-${index}`} />
+                    ))}
                 </div>
             </div>
 
@@ -55,18 +47,9 @@ const Page = () => {
             {/* Columna derecha */}
             <div className="w-full md:max-w-[200px] h-full flex items-center justify-center rounded-md p-0">
                 <div className="flex flex-col gap-2 w-full h-screen items-center justify-between p-1 border rounded-md">
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
-                    <div className="bg-amber-300 w-full h-full rounded-md flex items-center justify-center shadow-md">
-                        <p className="font-bold text-2xl italic text-center">Espacio publicitario</p>
-                    </div>
+                    {[...Array(4)].map((_, index) => (
+                        <AdSpace key={`right-ad-${index}`} />
+                    ))}
                 </div>
             </div>
         </div>

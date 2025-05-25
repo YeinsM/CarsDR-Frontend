@@ -10,7 +10,6 @@ import AppBreadCrumb from './AppBreadCrumb';
 import { PrimeReactContext } from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 import { ChildContainerProps } from '@/types';
-import { Toast } from 'primereact/toast';
 import AppProfileMenu from './AppProfileMenu';
 
 const Layout = (props: ChildContainerProps) => {
@@ -132,8 +131,6 @@ const Layout = (props: ChildContainerProps) => {
             </div>
             <AppProfileMenu />
             <AppConfig />
-
-            <Toast></Toast>
         </div>
     );
 };
