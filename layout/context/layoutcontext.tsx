@@ -10,10 +10,10 @@ export const LayoutContext = React.createContext({} as LayoutContextProps);
 export const LayoutProvider = (props: ChildContainerProps) => {
     const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>([]);
     const [layoutConfig, setLayoutConfig] = useState<LayoutConfig>({
-        ripple: false,
+        ripple: true,
         inputStyle: 'outlined',
-        menuMode: 'static',
-        colorScheme: 'dark',
+        menuMode: 'slim-plus',
+        colorScheme: 'light',
         theme: 'magenta',
         scale: 14
     });
