@@ -11,7 +11,13 @@ import { MailContext } from '../../../../../../../demo/components/apps/mail/cont
 import type { Demo } from '@/types';
 import { useSearchParams } from 'next/navigation';
 
-const AppMailDetail = ({ params }: { params: { mailId: string } }) => {
+interface MailPageProps {
+    params: {
+        mailId: string;
+    };
+}
+
+const AppMailDetail = ({ params }: MailPageProps) => {
     const searchParams = useSearchParams();
 
     const toast = useRef<Toast | null>(null);
