@@ -12,9 +12,11 @@ import Link from 'next/link';
 import { User } from '@/app/core/models/user.model';
 import { loginUser } from '@/app/core/services/user.service';
 import { AxiosToastError } from '@/app/api/Api';
+import { useToast } from '@/app/utils/ToastContext';
 
 const Login: Page = () => {
-    const toast = useRef(null);
+    const { showSuccess } = useToast();
+
     const { layoutConfig } = useContext(LayoutContext);
     const router = useRouter();
     const [credencials, setCredencials] = useState<User>({
@@ -38,12 +40,16 @@ const Login: Page = () => {
         try {
             const login = await loginUser(credencials);
             if (login.status === 200) {
+                
                 router.push('/');
             }
-        } catch (error) {            
-            AxiosToastError(error, toast);
+        } catch (error) {
+            // toast.error(error.response.data.message)
+
         }
     };
+
+    useEffect(() => { showSuccess("Sesión iniciada satisfactoriamente!") }, []);
 
     return (
         <div
@@ -63,10 +69,12 @@ const Login: Page = () => {
                         <div className="relative w-full">
                             <Button className="absolute left-2 top-2 bg-transparent text-primary border-none" icon="pi pi-home" data-pr-tooltip="Home" data-pr-position="right" pt={{ icon: { style: { fontSize: '1.5rem' } } }} onClick={goHome} />
                             <Tooltip target=".absolute.left-2" />
+
                         </div>
 
                         <div className="text-center mt-2 mb-3">
                             <p className="text-3xl font-bold italic text-[#0bd18a]">CARS-DR</p>
+
                         </div>
 
                         <div className="w-full text-left px-2">
@@ -97,6 +105,8 @@ const Login: Page = () => {
                                     Sign-up here
                                 </Link>
                             </p>
+
+                            <Button className='bg-red-500 text-lg'>Notify</Button>
                         </div>
 
                         <div className="mt-4 text-sm text-primary text-center">
