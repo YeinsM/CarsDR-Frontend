@@ -18,6 +18,7 @@ const AppSubMenu = (props: MenuProps) => {
 
     useEffect(() => {
           generateBreadcrumbs(props.model);
+          //coments
        // const crumbs = breadCrumGenerator(props.model)
     }, [module, setBreadcrumbs]);
 
