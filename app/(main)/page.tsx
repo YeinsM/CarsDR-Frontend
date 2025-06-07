@@ -13,7 +13,7 @@ import { Timeline } from 'primereact/timeline';
 import { CustomerService } from '../../demo/service/CustomerService';
 import { LayoutContext } from '../../layout/context/layoutcontext';
 import { ChartData, ChartOptions, ChartDataset } from 'chart.js';
-import { Toast } from 'primereact/toast';
+
 
 type BarOrLine = 'bar' | 'line';
 
@@ -23,16 +23,7 @@ let revenueChart: ChartData;
 let customerChart: ChartData;
 
 const Dashboard = () => {
-    const toast = useRef(null);
-
-    const showSuccess = () => {
-        toast.current.show({
-            severity: 'success',
-            summary: 'Sesión iniciada satisfactoriamente!',
-            life: 5000,
-            style: { background: 'rgba(255, 255, 255, 0.9)', borderRadius: '8px' }
-        });
-    }
+  
 
     const [visitorChartOptions, setVisitorChartOptions] = useState<ChartOptions | null>(null);
     const [countryChartOptions, setCountryChartOptions] = useState<ChartOptions | null>(null);
@@ -772,13 +763,9 @@ const Dashboard = () => {
         );
     };
 
-    useEffect(() => {
-        showSuccess();
-    }, []);
-
+ 
     return (
         <div className="grid">
-            <Toast ref={toast} />
             <div className="col-12 md:col-4">
                 <div className="card relative h-6rem border-round-xl p-3">
                     <span className="text-sm font-medium line-height-1">CONVERSATION RATE</span>

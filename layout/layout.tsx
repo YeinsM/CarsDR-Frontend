@@ -11,6 +11,8 @@ import { PrimeReactContext } from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 import { ChildContainerProps } from '@/types';
 import AppProfileMenu from './AppProfileMenu';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Layout = (props: ChildContainerProps) => {
     const { layoutConfig, layoutState, setLayoutState, isSlim, isSlimPlus, isHorizontal, isDesktop } = useContext(LayoutContext);
@@ -117,6 +119,7 @@ const Layout = (props: ChildContainerProps) => {
     });
 
     return (
+
         <div className={classNames('layout-container', containerClassName)} data-theme={layoutConfig.colorScheme}>
             <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
@@ -132,6 +135,7 @@ const Layout = (props: ChildContainerProps) => {
             <AppProfileMenu />
             <AppConfig />
         </div>
+
     );
 };
 

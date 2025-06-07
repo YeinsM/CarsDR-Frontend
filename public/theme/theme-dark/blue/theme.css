@@ -5548,20 +5548,20 @@
     color: #ffffff;
   }
   .p-toast .p-toast-message.p-toast-message-success {
-    background: rgba(255, 255, 255, 0.90);
+    background: rgba(255, 255, 255, 0.05);
     border: solid #0bd18a;
     border-width: 0 0 0 20px;
-    color: red;
+    color: #ffffff;
   }
   .p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
-    color: red;
+    color: #ffffff;
   }
   .p-toast .p-toast-message.p-toast-message-warn {
-    background: rgba(255, 255, 255, 0.90);
+    background: rgba(255, 255, 255, 0.05);
     border: solid #eee500;
     border-width: 0 0 0 20px;
-    color: red;
+    color: #ffffff;
   }
   .p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {

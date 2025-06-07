@@ -83,8 +83,7 @@ const Register: Page = () => {
 
         try {
             const { confirmPassword, ...userData } = formData;
-
-            console.log("data de registro ", userData)
+            
             const response = await registerUser(userData);
             if (response.status === 200) {
                 router.push('/auth/login');
@@ -100,7 +99,6 @@ const Register: Page = () => {
                 cellPhone: '',
             });
 
-            console.log("data de registro ", userData)
         } catch (error) {
             AxiosToastError(error, toast);
         }

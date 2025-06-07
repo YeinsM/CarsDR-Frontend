@@ -2,7 +2,7 @@
 
 import { useEventListener } from 'primereact/hooks';
 import { DomHandler } from 'primereact/utils';
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { LayoutContext } from '../context/layoutcontext';
 import { MenuContext } from '../context/menucontext';
 
