@@ -11,7 +11,6 @@ import { PrimeReactContext } from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 import { ChildContainerProps } from '@/types';
 import AppProfileMenu from './AppProfileMenu';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 const Layout = (props: ChildContainerProps) => {
