@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
@@ -11,29 +11,17 @@ const CarSearch = () => {
         { label: 'Usado', value: 'used' }
     ];
 
-    const brands = [
-        { label: 'Todas las Marcas', value: '' }
-        // Add more brands as needed
-    ];
-
-    const models = [
-        { label: 'Todos los Modelos', value: '' }
-        // Add more models as needed
-    ];
-
-    const years = [
-        { label: '-', value: '' }
-        // Add years as needed
-    ];
-
-    const prices = [
-        { label: '-', value: '' }
-        // Add price ranges as needed
-    ];
-
-    const locations = [
-        { label: 'Todas las Provincias', value: '' }
-        // Add locations as needed
+    const brands = [{ label: 'Todas las Marcas', value: '' }];
+    const models = [{ label: 'Todos los Modelos', value: '' }];
+    const years = [{ label: '-', value: '' }];
+    const prices = [{ label: '-', value: '' }];
+    const locations = [{ label: 'Todas las Provincias', value: '' }];
+    const typeVehicle = [{ label: 'Tipos de Vehiculos', value: '' }];
+    const placeOrgin = [
+        { label: 'Japone', value: 'japone' },
+        { label: 'Americano', value: 'americana' },
+        { label: 'Europeo', value: 'europeo' },
+        { label: 'Chino', value: 'chino' }
     ];
 
     const featuredCars = [
@@ -59,72 +47,66 @@ const CarSearch = () => {
 
     const carTemplate = (car: any) => {
         return (
-            <div className="surface-card p-2 border-round">
-                <div className="relative" style={{ 
-                    width: '100%',
-                    paddingTop: '56.25%', // 16:9 aspect ratio
-                    overflow: 'hidden',
-                }}>
-                    <img 
-                        src={car.image} 
-                        alt={car.name} 
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover'
-                        }}
-                        className="border-round"
+            <div className="surface-card border-round h-full flex flex-col overflow-hidden p-1">
+                <div className="flex-1 w-full flex items-center justify-center max-h-[290px]">
+                    <img
+                        src={car.image}
+                        alt={car.name}
+                        className="w-full h-full object-cover shadow-lg rounded-md"
                     />
                 </div>
-                <div className="text-center mt-3">
-                    <h3 className="text-xl font-semibold mb-2">{car.name}</h3>
-                    <p className="text-xl text-primary font-bold">{car.price}</p>
+                <div className="text-center mt-2">
+                    <h3 className="text-base font-semibold">{car.name}</h3>
+                    <p className="text-base text-primary font-bold">{car.price}</p>
                 </div>
             </div>
         );
     };
 
     return (
-        <div className="grid w-full">
-            <div className="col-12 md:col-4">
-                <div className="surface-card p-4 shadow-2 border-round">
-                    <h2 className="text-xl font-bold mb-4">¡Busca tu Carro!</h2>
-                    <div className="flex flex-column gap-3">
-                        <Dropdown options={conditions} placeholder="Estado" className="w-full" />
+        <div className="flex md:flex-row flex-col w-full h-full gap-2 overflow-hidde">
+            {/* Sidebar de filtros */}
+            <div className="md:max-w-[300px] w-full surface-card py-4 px-3 shadow-2 border-round overflow-hidden">
+                <h2 className="text-xl font-bold mb-2">¡Busca tu Carro!</h2>
+                <div className="flex flex-col gap-3">
+                    <Dropdown options={typeVehicle} placeholder="Tipos de vehiculos" className="w-full" />
+                    <div className="flex gap-2">
                         <Dropdown options={brands} placeholder="Marca" className="w-full" />
                         <Dropdown options={models} placeholder="Modelo" className="w-full" />
-                        <div className="flex gap-2">
-                            <Dropdown options={years} placeholder="Año" className="w-6" />
-                            <span className="flex align-items-center">hasta</span>
-                            <Dropdown options={years} placeholder="Año" className="w-6" />
-                        </div>
-                        <div className="flex gap-2">
-                            <Dropdown options={prices} placeholder="Precio" className="w-6" />
-                            <span className="flex align-items-center">hasta</span>
-                            <Dropdown options={prices} placeholder="Precio" className="w-6" />
-                        </div>
-                        <Dropdown options={locations} placeholder="Lugar" className="w-full" />
-                        <Button label="Buscar" severity="danger" className="w-full" />
                     </div>
+                    <div className="flex gap-2">
+                        <Dropdown options={years} placeholder="Año" className="w-6" />
+                        <span className="flex items-center">hasta</span>
+                        <Dropdown options={years} placeholder="Año" className="w-6" />
+                    </div>
+                    <div className="flex gap-2">
+                        <Dropdown options={prices} placeholder="Precio" className="w-6" />
+                        <span className="flex items-center">hasta</span>
+                        <Dropdown options={prices} placeholder="Precio" className="w-6" />
+                    </div>
+
+                    <div className="flex gap-2">
+                        <Dropdown options={conditions} placeholder="Estado" className="w-full" />
+                        <Dropdown options={placeOrgin} placeholder="Version" className="w-full" />
+                    </div>
+                    <Dropdown options={locations} placeholder="Lugar" className="w-full" />
+                    <Dropdown options={locations} placeholder="filtrado faltante" className="w-full" />
+                    <Button label="Buscar" severity="danger" className="w-full" />
                 </div>
             </div>
-            <div className="col-12 md:col-8 flex align-items-start">
-                <div className="surface-card p-4 shadow-2 border-round w-full">
-                    <h2 className="text-xl font-bold mb-4">Vehículos Destacados</h2>
-                    <div style={{ maxHeight: '450px', overflow: 'hidden' }}>
-                        <Carousel 
-                            value={featuredCars} 
-                            numVisible={1} 
-                            numScroll={1} 
-                            className="w-full"
-                            itemTemplate={carTemplate}
-                            autoplayInterval={3000}
-                        />
-                    </div>
+
+            {/* Carousel */}
+            <div className="flex-1 surface-card p-4 shadow-2 rounded overflow-hidden">
+                <h2 className="text-xl font-bold mb-3">Vehículos Destacados</h2>
+                <div className="h-full w-full overflow-hidden ">
+                    <Carousel
+                        value={featuredCars}
+                        numVisible={1}
+                        numScroll={1}
+                        className="w-full h-full"
+                        itemTemplate={carTemplate}
+                        autoplayInterval={3000}
+                    />
                 </div>
             </div>
         </div>
