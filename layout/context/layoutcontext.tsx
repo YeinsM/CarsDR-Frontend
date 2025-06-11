@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import Head from 'next/head';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Breadcrumb, LayoutConfig, LayoutContextProps } from '../../types/layout';
 import { ChildContainerProps } from '@/types';
 
@@ -32,7 +33,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         rightMenuActive: false
     });
 
-    const onMenuToggle = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+
+    const onMenuToggle = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+
         if (isOverlay()) {
             setLayoutState((prevLayoutState) => ({
                 ...prevLayoutState,
@@ -54,7 +57,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         }
     }, [isOverlay, isDesktop]);
 
-    const hideOverlayMenu = React.useCallback(() => {
+
+    const hideOverlayMenu = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             overlayMenuActive: false,
@@ -62,21 +67,27 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         }));
     }, []);
 
-    const toggleSearch = React.useCallback(() => {
+
+    const toggleSearch = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: !prevLayoutState.searchBarActive
         }));
     }, [layoutState.searchBarActive]);
 
-    const onSearchHide = React.useCallback(() => {
+
+    const onSearchHide = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: false
         }));
     }, []);
 
-    const showRightSidebar = React.useCallback(() => {
+
+    const showRightSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuActive: true
@@ -84,40 +95,46 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         hideOverlayMenu();
     }, [hideOverlayMenu]);
 
-    const showConfigSidebar = React.useCallback(() => {
+
+    const showConfigSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             configSidebarVisible: true
         }));
     }, []);
-    const showSidebar = React.useCallback(() => {
+
+    const showSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuVisible: true
         }));
     }, []);
 
-    const isOverlay = React.useCallback(() => {
+
+    const isOverlay = useCallback(() => {
         return layoutConfig.menuMode === 'overlay';
     }, [layoutConfig.menuMode]);
 
-    const isSlim = React.useCallback(() => {
+    const isSlim = useCallback(() => {
         return layoutConfig.menuMode === 'slim';
     }, [layoutConfig.menuMode]);
 
-    const isSlimPlus = React.useCallback(() => {
+    const isSlimPlus = useCallback(() => {
         return layoutConfig.menuMode === 'slim-plus';
     }, [layoutConfig.menuMode]);
 
-    const isHorizontal = React.useCallback(() => {
+    const isHorizontal = useCallback(() => {
         return layoutConfig.menuMode === 'horizontal';
     }, [layoutConfig.menuMode]);
 
-    const isDesktop = React.useCallback(() => {
+    const isDesktop = useCallback(() => {
         return window.innerWidth > 991;
     }, []);
 
-    const value = React.useMemo(
+    const value = useMemo(
+
         () => ({
             layoutConfig,
             setLayoutConfig,
@@ -138,9 +155,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         }),
         [
             layoutConfig,
-            setLayoutConfig,
             layoutState,
-            setLayoutState,
+            breadcrumbs,
+
             isSlim,
             isSlimPlus,
             isHorizontal,
@@ -149,8 +166,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
             toggleSearch,
             onSearchHide,
             showRightSidebar,
-            breadcrumbs,
-            setBreadcrumbs,
+
             showConfigSidebar,
             showSidebar
         ]
