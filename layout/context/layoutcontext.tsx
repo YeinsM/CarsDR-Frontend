@@ -66,7 +66,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
     const toggleSearch = () => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
-            searchBarActive: !layoutState.searchBarActive
+            searchBarActive: !prevLayoutState.searchBarActive
         }));
     };
 
