@@ -1,16 +1,17 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useContext } from 'react';
+import React, { useCallback, useEffect, useRef, useContext, lazy, Suspense } from 'react';
 import { classNames, DomHandler } from 'primereact/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { useEventListener, useMountEffect, useResizeListener, useUnmountEffect } from 'primereact/hooks';
 import AppTopbar from './AppTopbar';
-import AppConfig from './AppConfig';
 import AppBreadCrumb from './AppBreadCrumb';
 import { PrimeReactContext } from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 import { ChildContainerProps } from '@/types';
-import AppProfileMenu from './AppProfileMenu';
+const AppProfileMenu = lazy(() => import('./AppProfileMenu'));
+const AppConfig = lazy(() => import('./AppConfig'));
+
 
 const Layout = (props: ChildContainerProps) => {
     const { layoutConfig, isSlim, isSlimPlus, isHorizontal, isDesktop } = useContext(LayoutConfigContext);
@@ -130,8 +131,12 @@ const Layout = (props: ChildContainerProps) => {
                 <div className="layout-content">{props.children}</div>
                 <div className="layout-mask"></div>
             </div>
-            <AppProfileMenu />
-            <AppConfig />
+            <Suspense fallback={null}>
+                <AppProfileMenu />
+            </Suspense>
+            <Suspense fallback={null}>
+                <AppConfig />
+            </Suspense>
         </div>
     );
 };
