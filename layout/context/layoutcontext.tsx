@@ -33,7 +33,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         rightMenuActive: false
     });
 
-    const onMenuToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const onMenuToggle = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         if (isOverlay()) {
             setLayoutState((prevLayoutState) => ({
                 ...prevLayoutState,
@@ -53,89 +53,109 @@ export const LayoutProvider = (props: ChildContainerProps) => {
 
             event.preventDefault();
         }
-    };
+    }, [isOverlay, isDesktop]);
 
-    const hideOverlayMenu = () => {
+    const hideOverlayMenu = React.useCallback(() => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             overlayMenuActive: false,
             staticMenuMobileActive: false
         }));
-    };
+    }, []);
 
-    const toggleSearch = () => {
+    const toggleSearch = React.useCallback(() => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: !prevLayoutState.searchBarActive
         }));
-    };
+    }, [layoutState.searchBarActive]);
 
-    const onSearchHide = () => {
+    const onSearchHide = React.useCallback(() => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: false
         }));
-    };
+    }, []);
 
-    const showRightSidebar = () => {
+    const showRightSidebar = React.useCallback(() => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuActive: true
         }));
         hideOverlayMenu();
-    };
+    }, [hideOverlayMenu]);
 
-    const showConfigSidebar = () => {
+    const showConfigSidebar = React.useCallback(() => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             configSidebarVisible: true
         }));
-    };
-    const showSidebar = () => {
+    }, []);
+    const showSidebar = React.useCallback(() => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuVisible: true
         }));
-    };
+    }, []);
 
-    const isOverlay = () => {
+    const isOverlay = React.useCallback(() => {
         return layoutConfig.menuMode === 'overlay';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isSlim = () => {
+    const isSlim = React.useCallback(() => {
         return layoutConfig.menuMode === 'slim';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isSlimPlus = () => {
+    const isSlimPlus = React.useCallback(() => {
         return layoutConfig.menuMode === 'slim-plus';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isHorizontal = () => {
+    const isHorizontal = React.useCallback(() => {
         return layoutConfig.menuMode === 'horizontal';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isDesktop = () => {
+    const isDesktop = React.useCallback(() => {
         return window.innerWidth > 991;
-    };
+    }, []);
 
-    const value = {
-        layoutConfig,
-        setLayoutConfig,
-        layoutState,
-        setLayoutState,
-        isSlim,
-        isSlimPlus,
-        isHorizontal,
-        isDesktop,
-        onMenuToggle,
-        toggleSearch,
-        onSearchHide,
-        showRightSidebar,
-        breadcrumbs,
-        setBreadcrumbs,
-        showConfigSidebar,
-        showSidebar
-    };
+    const value = React.useMemo(
+        () => ({
+            layoutConfig,
+            setLayoutConfig,
+            layoutState,
+            setLayoutState,
+            isSlim,
+            isSlimPlus,
+            isHorizontal,
+            isDesktop,
+            onMenuToggle,
+            toggleSearch,
+            onSearchHide,
+            showRightSidebar,
+            breadcrumbs,
+            setBreadcrumbs,
+            showConfigSidebar,
+            showSidebar
+        }),
+        [
+            layoutConfig,
+            setLayoutConfig,
+            layoutState,
+            setLayoutState,
+            isSlim,
+            isSlimPlus,
+            isHorizontal,
+            isDesktop,
+            onMenuToggle,
+            toggleSearch,
+            onSearchHide,
+            showRightSidebar,
+            breadcrumbs,
+            setBreadcrumbs,
+            showConfigSidebar,
+            showSidebar
+        ]
+    );
 
     return (
         <LayoutContext.Provider value={value}>
