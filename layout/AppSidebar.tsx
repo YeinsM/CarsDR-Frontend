@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import AppMenu from './AppMenu';
 import { LayoutContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
@@ -18,6 +18,10 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
 
     useEffect(() => {
         return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
             resetOverlay();
         };
     }, []);
@@ -31,13 +35,13 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
         }
     };
 
-    let timeout = null;
+    const timeoutRef = useRef<number | null>(null);
 
     const onMouseEnter = () => {
         if (!layoutState.anchored) {
-            if (timeout) {
-                clearTimeout(timeout);
-                timeout = null;
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
             }
             setLayoutState((prevLayoutState) => ({
                 ...prevLayoutState,
@@ -48,8 +52,8 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
 
     const onMouseLeave = () => {
         if (!layoutState.anchored) {
-            if (!timeout) {
-                timeout = setTimeout(
+            if (!timeoutRef.current) {
+                timeoutRef.current = window.setTimeout(
                     () =>
                         setLayoutState((prevLayoutState) => ({
                             ...prevLayoutState,
