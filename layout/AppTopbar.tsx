@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef, useImperativeHandle, useContext, useRef, useState } from 'react';
+import Image from 'next/image';
 
 import AppBreadCrumb from './AppBreadCrumb';
 import { LayoutContext } from './context/layoutcontext';
@@ -97,7 +98,13 @@ const AppTopbar = forwardRef((props: { sidebarRef: React.RefObject<HTMLDivElemen
                         <li ref={profileMenuRef} className="profile-item topbar-item">
                             <StyleClass nodeRef={profileRef} selector="@next" enterClassName="hidden" enterActiveClassName="px-scalein" leaveToClassName="hidden" leaveActiveClassName="px-fadeout" hideOnOutsideClick>
                                 <a className="p-ripple" ref={profileRef}>
-                                    <img className="border-circle cursor-pointer" src="/layout/images/avatar/avatar-m-1.jpg" alt="avatar" />
+                                    <Image
+                                        className="border-circle cursor-pointer"
+                                        src="/layout/images/avatar/avatar-m-1.jpg"
+                                        alt="avatar"
+                                        width={318}
+                                        height={308}
+                                    />
                                     <Ripple />
                                 </a>
                             </StyleClass>
