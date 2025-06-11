@@ -86,7 +86,7 @@ const AppBreadcrumb = () => {
                                     placeholder="Search"
                                     onBlur={deactivateSearch}
                                     onKeyDown={(e) => {
-                                        if (e.key === 'ESCAPE') deactivateSearch();
+                                        if (e.key === 'Escape') deactivateSearch();
                                     }}
                                 />
                                 <i className="pi pi-search"></i>

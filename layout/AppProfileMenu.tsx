@@ -1,6 +1,7 @@
 import { Sidebar } from 'primereact/sidebar';
 import { useContext, useState } from 'react';
 import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
+import Image from 'next/image';
 import { Calendar } from 'primereact/calendar';
 
 const AppProfileSidebar = () => {
@@ -31,7 +32,7 @@ const AppProfileSidebar = () => {
             <div className="layout-rightmenu h-full overflow-y-auto overflow-x-hidden">
                 <div className="user-detail-wrapper text-center" style={{ padding: '4.5rem 0 2rem 0' }}>
                     <div className="user-detail-content mb-4">
-                        <img src="/layout/images/avatar/gene.png" alt="atlantis" className="user-image" />
+                        <Image src="/layout/images/avatar/gene.png" alt="atlantis" className="user-image" width={103} height={104} />
                         <span className="user-name text-2xl text-center block mt-4 mb-1">Gene Russell</span>
                         <span className="user-number">(406) 555-0120</span>
                     </div>

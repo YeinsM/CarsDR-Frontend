@@ -171,7 +171,7 @@ export default function FullPageLayout({ children }: FullPageLayoutProps) {
 
             <h5>Default Configuration</h5>
             <p>
-                Initial layout configuration can be defined at the <span className="text-primary font-medium">layout/context/layoutcontext.js</span> file, this step is optional and only necessary when customizing the defaults.
+                Initial layout configuration can be defined at the <span className="text-primary font-medium">layout/context/layoutcontext.tsx</span> file, this step is optional and only necessary when customizing the defaults.
             </p>
 
             <pre className="app-code">
