@@ -11,9 +11,8 @@ import { DataTable } from 'primereact/datatable';
 import { Carousel } from 'primereact/carousel';
 import { Timeline } from 'primereact/timeline';
 import { CustomerService } from '../../demo/service/CustomerService';
-import { LayoutContext } from '../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../layout/context/layoutcontext';
 import { ChartData, ChartOptions, ChartDataset } from 'chart.js';
-
 
 type BarOrLine = 'bar' | 'line';
 
@@ -23,8 +22,6 @@ let revenueChart: ChartData;
 let customerChart: ChartData;
 
 const Dashboard = () => {
-  
-
     const [visitorChartOptions, setVisitorChartOptions] = useState<ChartOptions | null>(null);
     const [countryChartOptions, setCountryChartOptions] = useState<ChartOptions | null>(null);
     const [revenueChartOptions, setRevenueChartOptions] = useState<ChartOptions | null>(null);
@@ -244,7 +241,7 @@ const Dashboard = () => {
         };
     };
 
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
 
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -763,7 +760,6 @@ const Dashboard = () => {
         );
     };
 
- 
     return (
         <div className="grid">
             <div className="col-12 md:col-4">

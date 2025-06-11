@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useRef, useContext, lazy, Suspense } from 'react';
 import { classNames, DomHandler } from 'primereact/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { useEventListener, useMountEffect, useResizeListener, useUnmountEffect } from 'primereact/hooks';
 import AppTopbar from './AppTopbar';
 import AppBreadCrumb from './AppBreadCrumb';
@@ -12,8 +12,10 @@ import { ChildContainerProps } from '@/types';
 const AppProfileMenu = lazy(() => import('./AppProfileMenu'));
 const AppConfig = lazy(() => import('./AppConfig'));
 
+
 const Layout = (props: ChildContainerProps) => {
-    const { layoutConfig, layoutState, setLayoutState, isSlim, isSlimPlus, isHorizontal, isDesktop } = useContext(LayoutContext);
+    const { layoutConfig, isSlim, isSlimPlus, isHorizontal, isDesktop } = useContext(LayoutConfigContext);
+    const { layoutState, setLayoutState } = useContext(SidebarContext);
     const { setRipple } = useContext(PrimeReactContext);
     const topbarRef = useRef(null);
     const sidebarRef = useRef(null);

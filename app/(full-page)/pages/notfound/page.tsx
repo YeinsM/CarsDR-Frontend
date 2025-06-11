@@ -4,11 +4,11 @@ import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
 
 import { classNames } from 'primereact/utils';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import { useRouter } from 'next/navigation';
 
 function NotFound() {
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
 
     const goHome = () => {
