@@ -38,14 +38,13 @@ const AppMenuitem = (props: AppMenuItemProps) => {
                 resetMenu: false
             }));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [layoutState]);
+    }, [layoutState.resetMenu]);
 
     useEffect(() => {
         if (!(isSlim() || isHorizontal() || isSlimPlus()) && isActiveRoute) {
             setActiveMenu(key);
         }
-    }, [layoutConfig]);
+    }, [layoutConfig.menuMode]);
 
     useEffect(() => {
         const url = pathname + searchParams.toString();

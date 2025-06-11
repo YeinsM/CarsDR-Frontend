@@ -37,6 +37,7 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
         }
     };
 
+
     const timeoutRef = useRef<number | null>(null);
 
     const onMouseEnter = () => {
@@ -62,7 +63,7 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
                             sidebarActive: false
                         })),
                     300
-                );
+                ) as NodeJS.Timeout;
             }
         }
     };
