@@ -3,13 +3,14 @@
 import { Tooltip } from 'primereact/tooltip';
 import { useContext, useEffect, useRef } from 'react';
 import AppMenuitem from './AppMenuitem';
-import { LayoutContext } from './context/layoutcontext';
+import { SidebarContext, BreadcrumbContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
 import { Breadcrumb, BreadcrumbItem, MenuModal, MenuProps } from '../types/layout';
 import breadCrumGenerator from './utils/breadCrumUtils';
 
 const AppSubMenu = (props: MenuProps) => {
-    const { layoutState, setBreadcrumbs } = useContext(LayoutContext);
+    const { layoutState } = useContext(SidebarContext);
+    const { setBreadcrumbs } = useContext(BreadcrumbContext);
     const tooltipRef = useRef<Tooltip | null>(null);
 
     useEffect(() => {
@@ -18,7 +19,7 @@ const AppSubMenu = (props: MenuProps) => {
 
     useEffect(() => {
         //   generateBreadcrumbs(props.model);
-        const crumbs = breadCrumGenerator(props.model)
+        const crumbs = breadCrumGenerator(props.model);
     }, [module, setBreadcrumbs]);
 
     // const generateBreadcrumbs = (model: MenuModal[]) => {

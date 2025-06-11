@@ -6,12 +6,12 @@ import { InputText } from 'primereact/inputtext';
 import { StyleClass } from 'primereact/styleclass';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
-import { LayoutContext } from '../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../layout/context/layoutcontext';
 import { PrimeReactContext } from 'primereact/api';
 import type { ColorScheme, Page } from '@/types';
 
 const LandingPage: Page = () => {
-    const { layoutConfig, setLayoutConfig } = useContext(LayoutContext);
+    const { layoutConfig, setLayoutConfig } = useContext(LayoutConfigContext);
     const { changeTheme } = useContext(PrimeReactContext);
     const router = useRouter();
 

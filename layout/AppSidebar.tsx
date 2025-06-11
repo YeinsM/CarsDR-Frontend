@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useContext, useEffect } from 'react';
 import AppMenu from './AppMenu';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
 import { classNames } from 'primereact/utils';
 
 const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
-    const { setLayoutState, layoutConfig, layoutState } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
+    const { setLayoutState, layoutState } = useContext(SidebarContext);
     const anchor = () => {
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,

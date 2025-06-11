@@ -3,7 +3,7 @@
 import React, { forwardRef, useImperativeHandle, useContext, useRef, useState } from 'react';
 
 import AppBreadCrumb from './AppBreadCrumb';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import AppSidebar from './AppSidebar';
 import { StyleClass } from 'primereact/styleclass';
 import { Ripple } from 'primereact/ripple';
@@ -22,7 +22,8 @@ const AppTopbar = forwardRef((props: { sidebarRef: React.RefObject<HTMLDivElemen
     const profileRef = useRef(null);
     const profileMenuRef = useRef(null);
 
-    const { onMenuToggle, showConfigSidebar, showSidebar, layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
+    const { onMenuToggle, showConfigSidebar, showSidebar } = useContext(SidebarContext);
 
     useImperativeHandle(ref, () => ({
         menubutton: menubuttonRef.current

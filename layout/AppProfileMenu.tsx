@@ -1,10 +1,11 @@
 import { Sidebar } from 'primereact/sidebar';
 import { useContext, useState } from 'react';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { Calendar } from 'primereact/calendar';
 
 const AppProfileSidebar = () => {
-    const { layoutState, setLayoutState, layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
+    const { layoutState, setLayoutState } = useContext(SidebarContext);
 
     const onRightMenuHide = () => {
         setLayoutState((prevLayoutState) => ({

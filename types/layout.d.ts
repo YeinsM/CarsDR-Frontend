@@ -73,6 +73,31 @@ export interface LayoutContextProps {
     showSidebar: () => void;
 }
 
+export interface LayoutConfigContextProps {
+    layoutConfig: LayoutConfig;
+    setLayoutConfig: Dispatch<SetStateAction<LayoutConfig>>;
+    isSlimPlus: () => boolean;
+    isSlim: () => boolean;
+    isHorizontal: () => boolean;
+    isDesktop: () => boolean;
+}
+
+export interface SidebarContextProps {
+    layoutState: LayoutState;
+    setLayoutState: Dispatch<SetStateAction<LayoutState>>;
+    showRightSidebar: () => void;
+    onMenuToggle: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    onSearchHide: () => void;
+    toggleSearch: () => void;
+    showConfigSidebar: () => void;
+    showSidebar: () => void;
+}
+
+export interface BreadcrumbContextProps {
+    breadcrumbs: Breadcrumb[];
+    setBreadcrumbs: Dispatch<SetStateAction<Breadcrumb[]>>;
+}
+
 export interface MailContextProps {
     mails: Demo.Mail[];
     toastRef: React.RefObject<Toast>;
