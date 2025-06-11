@@ -5,14 +5,15 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { Ripple } from 'primereact/ripple';
 import { classNames } from 'primereact/utils';
 import { useContext, useEffect, useRef } from 'react';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { MenuContext } from './context/menucontext';
 import { useSubmenuOverlayPosition } from './hooks/useSubmenuOverlayPosition';
 import { AppMenuItemProps } from '../types/layout';
 
 const AppMenuitem = (props: AppMenuItemProps) => {
     const { activeMenu, setActiveMenu } = useContext(MenuContext);
-    const { isSlim, isSlimPlus, isHorizontal, isDesktop, setLayoutState, layoutState, layoutConfig } = useContext(LayoutContext);
+    const { isSlim, isSlimPlus, isHorizontal, isDesktop, layoutConfig } = useContext(LayoutConfigContext);
+    const { setLayoutState, layoutState } = useContext(SidebarContext);
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const submenuRef = useRef(null);

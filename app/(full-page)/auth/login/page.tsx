@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Page } from '../../../../types/layout';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
 import { Tooltip } from 'primereact/tooltip';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ import { useToast } from '@/app/utils/ToastContext';
 const Login: Page = () => {
     const { showSuccess } = useToast();
 
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
     const [credencials, setCredencials] = useState<User>({
         emailOrUsername: '',
@@ -40,16 +40,16 @@ const Login: Page = () => {
         try {
             const login = await loginUser(credencials);
             if (login.status === 200) {
-                
                 router.push('/');
             }
         } catch (error) {
             // toast.error(error.response.data.message)
-
         }
     };
 
-    useEffect(() => { showSuccess("Sesión iniciada satisfactoriamente!") }, []);
+    useEffect(() => {
+        showSuccess('Sesión iniciada satisfactoriamente!');
+    }, []);
 
     return (
         <div
@@ -69,12 +69,10 @@ const Login: Page = () => {
                         <div className="relative w-full">
                             <Button className="absolute left-2 top-2 bg-transparent text-primary border-none" icon="pi pi-home" data-pr-tooltip="Home" data-pr-position="right" pt={{ icon: { style: { fontSize: '1.5rem' } } }} onClick={goHome} />
                             <Tooltip target=".absolute.left-2" />
-
                         </div>
 
                         <div className="text-center mt-2 mb-3">
                             <p className="text-3xl font-bold italic text-[#0bd18a]">CARS-DR</p>
-
                         </div>
 
                         <div className="w-full text-left px-2">
@@ -86,7 +84,7 @@ const Login: Page = () => {
                                 <div className="flex flex-col gap-4">
                                     <span className="p-input-icon-left w-full">
                                         <i className="pi pi-user text-primary"></i>
-                                        <InputText name="emailOrUsername" type='text' placeholder="Email or Username" value={credencials.emailOrUsername} onChange={handleChange} className="w-full bg-gray-100" />
+                                        <InputText name="emailOrUsername" type="text" placeholder="Email or Username" value={credencials.emailOrUsername} onChange={handleChange} className="w-full bg-gray-100" />
                                     </span>
                                     <span className="p-input-icon-left w-full">
                                         <i className="pi pi-key text-primary"></i>
@@ -106,7 +104,7 @@ const Login: Page = () => {
                                 </Link>
                             </p>
 
-                            <Button className='bg-red-500 text-lg'>Notify</Button>
+                            <Button className="bg-red-500 text-lg">Notify</Button>
                         </div>
 
                         <div className="mt-4 text-sm text-primary text-center">
