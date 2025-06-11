@@ -33,7 +33,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         rightMenuActive: false
     });
 
+
     const onMenuToggle = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+
         if (isOverlay()) {
             setLayoutState((prevLayoutState) => ({
                 ...prevLayoutState,
@@ -55,7 +57,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         }
     }, [isOverlay, isDesktop]);
 
+
     const hideOverlayMenu = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             overlayMenuActive: false,
@@ -63,21 +67,27 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         }));
     }, []);
 
+
     const toggleSearch = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
-            searchBarActive: !layoutState.searchBarActive
+            searchBarActive: !prevLayoutState.searchBarActive
         }));
     }, [layoutState.searchBarActive]);
 
+
     const onSearchHide = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: false
         }));
     }, []);
 
+
     const showRightSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuActive: true
@@ -85,18 +95,23 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         hideOverlayMenu();
     }, [hideOverlayMenu]);
 
+
     const showConfigSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             configSidebarVisible: true
         }));
     }, []);
+
     const showSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuVisible: true
         }));
     }, []);
+
 
     const isOverlay = useCallback(() => {
         return layoutConfig.menuMode === 'overlay';
@@ -119,6 +134,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
     }, []);
 
     const value = useMemo(
+
         () => ({
             layoutConfig,
             setLayoutConfig,
@@ -141,6 +157,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
             layoutConfig,
             layoutState,
             breadcrumbs,
+
             isSlim,
             isSlimPlus,
             isHorizontal,
@@ -149,30 +166,13 @@ export const LayoutProvider = (props: ChildContainerProps) => {
             toggleSearch,
             onSearchHide,
             showRightSidebar,
+
             showConfigSidebar,
             showSidebar
         ]
     );
 
     return (
-        <LayoutContext.Provider value={value}>
-            <>
-                <Head>
-                    <title>PrimeReact - DIAMOND</title>
-                    <meta charSet="UTF-8" />
-                    <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
-                    <meta name="robots" content="index, follow" />
-                    <meta name="viewport" content="initial-scale=1, width=device-width" />
-                    <meta property="og:type" content="website"></meta>
-                    <meta property="og:title" content="Diamond by PrimeReact for NextJS"></meta>
-                    <meta property="og:url" content="https://diamond.primereact.org"></meta>
-                    <meta property="og:description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
-                    <meta property="og:image" content="https://www.primefaces.org/static/social/diamond-react.png"></meta>
-                    <meta property="og:ttl" content="604800"></meta>
-                    <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
-                </Head>
-                {props.children}
-            </>
-        </LayoutContext.Provider>
+        <LayoutContext.Provider value={value}>{props.children}</LayoutContext.Provider>
     );
 };
