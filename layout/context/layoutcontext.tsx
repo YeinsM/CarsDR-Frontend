@@ -1,11 +1,14 @@
 'use client';
 
 import Head from 'next/head';
+import { Breadcrumb, LayoutConfig, LayoutContextProps, LayoutConfigContextProps, SidebarContextProps, BreadcrumbContextProps } from '../../types/layout';
 import React, { useState, useMemo, useCallback } from 'react';
-import { Breadcrumb, LayoutConfig, LayoutContextProps } from '../../types/layout';
 import { ChildContainerProps } from '@/types';
 
 export const LayoutContext = React.createContext({} as LayoutContextProps);
+export const LayoutConfigContext = React.createContext({} as LayoutConfigContextProps);
+export const SidebarContext = React.createContext({} as SidebarContextProps);
+export const BreadcrumbContext = React.createContext({} as BreadcrumbContextProps);
 
 export const LayoutProvider = (props: ChildContainerProps) => {
     const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>([]);
@@ -131,48 +134,78 @@ export const LayoutProvider = (props: ChildContainerProps) => {
 
     const isDesktop = useCallback(() => {
         return window.innerWidth > 991;
-    }, []);
 
-    const value = useMemo(
+    };
 
-        () => ({
-            layoutConfig,
-            setLayoutConfig,
-            layoutState,
-            setLayoutState,
-            isSlim,
-            isSlimPlus,
-            isHorizontal,
-            isDesktop,
-            onMenuToggle,
-            toggleSearch,
-            onSearchHide,
-            showRightSidebar,
-            breadcrumbs,
-            setBreadcrumbs,
-            showConfigSidebar,
-            showSidebar
-        }),
-        [
-            layoutConfig,
-            layoutState,
-            breadcrumbs,
+    const layoutConfigValue: LayoutConfigContextProps = {
+        layoutConfig,
+        setLayoutConfig,
+        isSlim,
+        isSlimPlus,
+        isHorizontal,
+        isDesktop
+    };
 
-            isSlim,
-            isSlimPlus,
-            isHorizontal,
-            isDesktop,
-            onMenuToggle,
-            toggleSearch,
-            onSearchHide,
-            showRightSidebar,
+    const sidebarValue: SidebarContextProps = {
+        layoutState,
+        setLayoutState,
+        showRightSidebar,
+        onMenuToggle,
+        onSearchHide,
+        toggleSearch,
+        showConfigSidebar,
+        showSidebar
+    };
 
-            showConfigSidebar,
-            showSidebar
-        ]
-    );
+    const breadcrumbValue: BreadcrumbContextProps = {
+        breadcrumbs,
+        setBreadcrumbs
+    };
+
+    const contextValue: LayoutContextProps = {
+        layoutConfig,
+        setLayoutConfig,
+        layoutState,
+        setLayoutState,
+        isSlim,
+        isSlimPlus,
+        isHorizontal,
+        isDesktop,
+        onMenuToggle,
+        toggleSearch,
+        onSearchHide,
+        showRightSidebar,
+        breadcrumbs,
+        setBreadcrumbs,
+        showConfigSidebar,
+        showSidebar
+    };
 
     return (
-        <LayoutContext.Provider value={value}>{props.children}</LayoutContext.Provider>
+        <LayoutConfigContext.Provider value={layoutConfigValue}>
+            <SidebarContext.Provider value={sidebarValue}>
+                <BreadcrumbContext.Provider value={breadcrumbValue}>
+                    <LayoutContext.Provider value={contextValue}>
+                        <>
+                            <Head>
+                                <title>PrimeReact - DIAMOND</title>
+                                <meta charSet="UTF-8" />
+                                <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
+                                <meta name="robots" content="index, follow" />
+                                <meta name="viewport" content="initial-scale=1, width=device-width" />
+                                <meta property="og:type" content="website"></meta>
+                                <meta property="og:title" content="Diamond by PrimeReact for NextJS"></meta>
+                                <meta property="og:url" content="https://diamond.primereact.org"></meta>
+                                <meta property="og:description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
+                                <meta property="og:image" content="https://www.primefaces.org/static/social/diamond-react.png"></meta>
+                                <meta property="og:ttl" content="604800"></meta>
+                                <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
+                            </Head>
+                            {props.children}
+                        </>
+                    </LayoutContext.Provider>
+                </BreadcrumbContext.Provider>
+            </SidebarContext.Provider>
+        </LayoutConfigContext.Provider>
     );
 };

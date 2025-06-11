@@ -3,11 +3,12 @@
 import { useEventListener } from 'primereact/hooks';
 import { DomHandler } from 'primereact/utils';
 import { useCallback, useContext, useEffect } from 'react';
-import { LayoutContext } from '../context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from '../context/layoutcontext';
 import { MenuContext } from '../context/menucontext';
 
 export const useSubmenuOverlayPosition = ({ target, overlay, container, when }) => {
-    const { isSlim, isSlimPlus, isHorizontal, setLayoutState, layoutState } = useContext(LayoutContext);
+    const { isSlim, isSlimPlus, isHorizontal } = useContext(LayoutConfigContext);
+    const { setLayoutState, layoutState } = useContext(SidebarContext);
     const { activeMenu } = useContext(MenuContext);
     const [bindScrollListener, unbindScrollListener] = useEventListener({
         type: 'scroll',

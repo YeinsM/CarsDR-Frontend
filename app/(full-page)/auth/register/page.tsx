@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 import { useRouter } from 'next/navigation';
 import { Page } from '../../../../types/layout';
 import { classNames } from 'primereact/utils';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import { Tooltip } from 'primereact/tooltip';
 import { User } from '@/app/core/models/user.model';
 import { AxiosToastError } from '@/app/api/Api';
@@ -17,10 +17,9 @@ import { Checkbox } from 'primereact/checkbox';
 import { getRoles } from '@/app/core/services/role.service';
 import { registerUser } from '@/app/core/services/user.service';
 
-
 const Register: Page = () => {
     const toast = useRef(null);
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
     const [selectedUserType, setSelectedUserType] = useState(null);
     const [selectCountry, setSelectCountrye] = useState(null);
@@ -36,7 +35,7 @@ const Register: Page = () => {
         password: '',
         roleId: '',
         cellPhone: '',
-        address: '',
+        address: ''
     });
 
     useEffect(() => {
@@ -45,23 +44,21 @@ const Register: Page = () => {
                 const data = await getRoles();
                 const formattedRoles = data.map((role: any) => ({
                     label: role.name,
-                    value: role.id,
-
+                    value: role.id
                 }));
                 setRoles(formattedRoles);
             } catch (error) {
-                console.error("Error fetching roles:", error);
+                console.error('Error fetching roles:', error);
             }
         };
 
         fetchRoles();
     }, []);
 
-
     const selecttCountry = [
         { label: 'Selecciona Pais', value: '' },
         { label: 'Dominican Republic', value: 'Dominican Republic' },
-        { label: 'Colombia', value: 'colombia' },
+        { label: 'Colombia', value: 'colombia' }
     ];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +80,7 @@ const Register: Page = () => {
 
         try {
             const { confirmPassword, ...userData } = formData;
-            
+
             const response = await registerUser(userData);
             if (response.status === 200) {
                 router.push('/auth/login');
@@ -96,9 +93,8 @@ const Register: Page = () => {
                 password: '',
                 confirmPassword: '',
                 roleId: '',
-                cellPhone: '',
+                cellPhone: ''
             });
-
         } catch (error) {
             AxiosToastError(error, toast);
         }
