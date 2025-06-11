@@ -13,7 +13,6 @@ const AppProfileSidebar = () => {
         }));
     };
     const [date, setDate] = useState(null);
-    const [visibleLeft, setVisibleLeft] = useState(false);
 
     return (
         <Sidebar
