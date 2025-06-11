@@ -37,14 +37,13 @@ const AppMenuitem = (props: AppMenuItemProps) => {
                 resetMenu: false
             }));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [layoutState]);
+    }, [layoutState.resetMenu]);
 
     useEffect(() => {
         if (!(isSlim() || isHorizontal() || isSlimPlus()) && isActiveRoute) {
             setActiveMenu(key);
         }
-    }, [layoutConfig]);
+    }, [layoutConfig.menuMode]);
 
     useEffect(() => {
         const url = pathname + searchParams.toString();
@@ -136,7 +135,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
             ref={menuitemRef}
             className={classNames({
                 'layout-root-menuitem': props.root,
-                'active-menuitem': active 
+                'active-menuitem': active
             })}
         >
             {props.root && item.visible !== false && <div className="layout-menuitem-root-text">{item.label}</div>}
