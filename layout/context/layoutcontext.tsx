@@ -1,7 +1,7 @@
 'use client';
 
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Breadcrumb, LayoutConfig, LayoutContextProps } from '../../types/layout';
 import { ChildContainerProps } from '@/types';
 
@@ -33,7 +33,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         rightMenuActive: false
     });
 
-    const onMenuToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+    const onMenuToggle = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+
         if (isOverlay()) {
             setLayoutState((prevLayoutState) => ({
                 ...prevLayoutState,
@@ -53,109 +55,124 @@ export const LayoutProvider = (props: ChildContainerProps) => {
 
             event.preventDefault();
         }
-    };
+    }, [isOverlay, isDesktop]);
 
-    const hideOverlayMenu = () => {
+
+    const hideOverlayMenu = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             overlayMenuActive: false,
             staticMenuMobileActive: false
         }));
-    };
+    }, []);
 
-    const toggleSearch = () => {
+
+    const toggleSearch = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
-            searchBarActive: !layoutState.searchBarActive
+            searchBarActive: !prevLayoutState.searchBarActive
         }));
-    };
+    }, [layoutState.searchBarActive]);
 
-    const onSearchHide = () => {
+
+    const onSearchHide = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: false
         }));
-    };
+    }, []);
 
-    const showRightSidebar = () => {
+
+    const showRightSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuActive: true
         }));
         hideOverlayMenu();
-    };
+    }, [hideOverlayMenu]);
 
-    const showConfigSidebar = () => {
+
+    const showConfigSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             configSidebarVisible: true
         }));
-    };
-    const showSidebar = () => {
+    }, []);
+
+    const showSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuVisible: true
         }));
-    };
+    }, []);
 
-    const isOverlay = () => {
+
+    const isOverlay = useCallback(() => {
         return layoutConfig.menuMode === 'overlay';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isSlim = () => {
+    const isSlim = useCallback(() => {
         return layoutConfig.menuMode === 'slim';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isSlimPlus = () => {
+    const isSlimPlus = useCallback(() => {
         return layoutConfig.menuMode === 'slim-plus';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isHorizontal = () => {
+    const isHorizontal = useCallback(() => {
         return layoutConfig.menuMode === 'horizontal';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isDesktop = () => {
+    const isDesktop = useCallback(() => {
         return window.innerWidth > 991;
-    };
+    }, []);
 
-    const value = {
-        layoutConfig,
-        setLayoutConfig,
-        layoutState,
-        setLayoutState,
-        isSlim,
-        isSlimPlus,
-        isHorizontal,
-        isDesktop,
-        onMenuToggle,
-        toggleSearch,
-        onSearchHide,
-        showRightSidebar,
-        breadcrumbs,
-        setBreadcrumbs,
-        showConfigSidebar,
-        showSidebar
-    };
+    const value = useMemo(
+
+        () => ({
+            layoutConfig,
+            setLayoutConfig,
+            layoutState,
+            setLayoutState,
+            isSlim,
+            isSlimPlus,
+            isHorizontal,
+            isDesktop,
+            onMenuToggle,
+            toggleSearch,
+            onSearchHide,
+            showRightSidebar,
+            breadcrumbs,
+            setBreadcrumbs,
+            showConfigSidebar,
+            showSidebar
+        }),
+        [
+            layoutConfig,
+            layoutState,
+            breadcrumbs,
+
+            isSlim,
+            isSlimPlus,
+            isHorizontal,
+            isDesktop,
+            onMenuToggle,
+            toggleSearch,
+            onSearchHide,
+            showRightSidebar,
+
+            showConfigSidebar,
+            showSidebar
+        ]
+    );
 
     return (
-        <LayoutContext.Provider value={value}>
-            <>
-                <Head>
-                    <title>PrimeReact - DIAMOND</title>
-                    <meta charSet="UTF-8" />
-                    <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
-                    <meta name="robots" content="index, follow" />
-                    <meta name="viewport" content="initial-scale=1, width=device-width" />
-                    <meta property="og:type" content="website"></meta>
-                    <meta property="og:title" content="Diamond by PrimeReact for NextJS"></meta>
-                    <meta property="og:url" content="https://diamond.primereact.org"></meta>
-                    <meta property="og:description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
-                    <meta property="og:image" content="https://www.primefaces.org/static/social/diamond-react.png"></meta>
-                    <meta property="og:ttl" content="604800"></meta>
-                    <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
-                </Head>
-                {props.children}
-            </>
-        </LayoutContext.Provider>
+        <LayoutContext.Provider value={value}>{props.children}</LayoutContext.Provider>
     );
 };

@@ -28,14 +28,16 @@ function AppMailReply(props: AppMailReplyProps) {
     const { onSend, toastRef } = useContext(MailContext);
 
     const sendMail = () => {
-        let { image, from, title } = content as Demo.Mail;
-        setNewMail((prevState) => ({
-            ...prevState,
+        const { image, from, title } = content as Demo.Mail;
+        const updatedMail = {
+            ...newMail,
             to: from,
             title: title,
             image: image
-        }));
-        onSend(newMail);
+        };
+
+        setNewMail(updatedMail);
+        onSend(updatedMail);
 
         toastRef.current?.show({
             severity: 'success',
