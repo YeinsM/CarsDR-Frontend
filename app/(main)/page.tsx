@@ -11,9 +11,8 @@ import { DataTable } from 'primereact/datatable';
 import { Carousel } from 'primereact/carousel';
 import { Timeline } from 'primereact/timeline';
 import { CustomerService } from '../../demo/service/CustomerService';
-import { LayoutContext } from '../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../layout/context/layoutcontext';
 import { ChartData, ChartOptions, ChartDataset } from 'chart.js';
-import { Toast } from 'primereact/toast';
 
 type BarOrLine = 'bar' | 'line';
 
@@ -23,12 +22,6 @@ let revenueChart: ChartData;
 let customerChart: ChartData;
 
 const Dashboard = () => {
-    const toast = useRef(null);
-
-    const showSuccess = () => {
-        toast.current.show({ severity: 'success', summary: 'Session iniciada satisfactoriamente!', life: 3000, contentStyle: {'backgroundColor': '#FFF', 'color': '#FFFFFF', 'opacity': '1'}  });
-    }
-    
     const [visitorChartOptions, setVisitorChartOptions] = useState<ChartOptions | null>(null);
     const [countryChartOptions, setCountryChartOptions] = useState<ChartOptions | null>(null);
     const [revenueChartOptions, setRevenueChartOptions] = useState<ChartOptions | null>(null);
@@ -248,7 +241,7 @@ const Dashboard = () => {
         };
     };
 
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
 
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -767,13 +760,8 @@ const Dashboard = () => {
         );
     };
 
-    useEffect(() => {
-        showSuccess();
-    }, []);
-
     return (
         <div className="grid">
-            <Toast ref={toast}></Toast>
             <div className="col-12 md:col-4">
                 <div className="card relative h-6rem border-round-xl p-3">
                     <span className="text-sm font-medium line-height-1">CONVERSATION RATE</span>

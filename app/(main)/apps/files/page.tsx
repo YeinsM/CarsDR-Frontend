@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FileService } from '../../../../demo/service/FileService';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import type { ChartData, ChartOptions, Plugin } from 'chart.js';
 import type { Demo } from '@/types';
 
@@ -20,7 +20,7 @@ function Files() {
     const [chartData, setChartData] = useState<ChartData | null>(null);
     const [chartOptions, setChartOptions] = useState<ChartOptions<'doughnut'> | null>(null);
     const [chartPlugin, setChartPlugin] = useState({});
-    const layoutConfig = useContext(LayoutContext);
+    const layoutConfig = useContext(LayoutConfigContext);
     const fileUploader = useRef<FileUpload>(null);
     const toast = useRef<Toast>(null);
     const menu = useRef<Menu>(null);

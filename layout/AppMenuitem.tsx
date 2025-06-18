@@ -5,14 +5,15 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { Ripple } from 'primereact/ripple';
 import { classNames } from 'primereact/utils';
 import { useContext, useEffect, useRef } from 'react';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { MenuContext } from './context/menucontext';
 import { useSubmenuOverlayPosition } from './hooks/useSubmenuOverlayPosition';
 import { AppMenuItemProps } from '../types/layout';
 
 const AppMenuitem = (props: AppMenuItemProps) => {
     const { activeMenu, setActiveMenu } = useContext(MenuContext);
-    const { isSlim, isSlimPlus, isHorizontal, isDesktop, setLayoutState, layoutState, layoutConfig } = useContext(LayoutContext);
+    const { isSlim, isSlimPlus, isHorizontal, isDesktop, layoutConfig } = useContext(LayoutConfigContext);
+    const { setLayoutState, layoutState } = useContext(SidebarContext);
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const submenuRef = useRef(null);
@@ -37,14 +38,13 @@ const AppMenuitem = (props: AppMenuItemProps) => {
                 resetMenu: false
             }));
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [layoutState]);
+    }, [layoutState.resetMenu]);
 
     useEffect(() => {
         if (!(isSlim() || isHorizontal() || isSlimPlus()) && isActiveRoute) {
             setActiveMenu(key);
         }
-    }, [layoutConfig]);
+    }, [layoutConfig.menuMode]);
 
     useEffect(() => {
         const url = pathname + searchParams.toString();
@@ -136,7 +136,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
             ref={menuitemRef}
             className={classNames({
                 'layout-root-menuitem': props.root,
-                'active-menuitem': active 
+                'active-menuitem': active
             })}
         >
             {props.root && item.visible !== false && <div className="layout-menuitem-root-text">{item.label}</div>}

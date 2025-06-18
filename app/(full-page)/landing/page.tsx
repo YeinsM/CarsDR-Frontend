@@ -6,12 +6,12 @@ import { InputText } from 'primereact/inputtext';
 import { StyleClass } from 'primereact/styleclass';
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
-import { LayoutContext } from '../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../layout/context/layoutcontext';
 import { PrimeReactContext } from 'primereact/api';
 import type { ColorScheme, Page } from '@/types';
 
 const LandingPage: Page = () => {
-    const { layoutConfig, setLayoutConfig } = useContext(LayoutContext);
+    const { layoutConfig, setLayoutConfig } = useContext(LayoutConfigContext);
     const { changeTheme } = useContext(PrimeReactContext);
     const router = useRouter();
 
@@ -473,7 +473,7 @@ const LandingPage: Page = () => {
                                 <span className="header font-medium text-xl opacity-60">Newsletter</span>
                                 <p className="font-medium opacity-60">Join our newsletter to get notification about the new features</p>
                                 <div className="p-inputgroup">
-                                    <InputText type="text" className="p-component p-inputtext" placeholder="Enter your email adress" />
+                                    <InputText type="text" className="p-component p-inputtext" placeholder="Enter your email address" />
                                     <Button className="join-button p-button-outlined p-button-secondary p-button-text p-button p-component bg-bluegray-500" style={{ mixBlendMode: 'multiply', borderRadius: '0 8px 8px 0' }}>
                                         <span aria-hidden="true" className="p-button-label">
                                             Join

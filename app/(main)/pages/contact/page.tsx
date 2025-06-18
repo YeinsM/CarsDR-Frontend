@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 
 function Contact() {
     const [name, setName] = useState('');
@@ -22,7 +22,7 @@ function Contact() {
         { icon: 'pi pi-fw pi-print', title: 'Fax', info: '3 (833) 297-1548' }
     ]);
 
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     return (
         <div className="grid card grid-nogutter" style={{ columnGap: '2rem', rowGap: '2rem' }}>
             <div className="col-12">

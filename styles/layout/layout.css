@@ -10,36 +10,44 @@
     from {
         background-color: transparent;
     }
+
     to {
         background-color: var(--maskbg);
     }
 }
+
 @keyframes px-scalein {
     0% {
         opacity: 0;
         transform: scaleY(0.8);
     }
+
     100% {
         opacity: 1;
         transform: scaleY(1);
     }
 }
+
 @keyframes px-fadein {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
 }
+
 @keyframes px-fadeout {
     0% {
         opacity: 1;
     }
+
     100% {
         opacity: 0;
     }
 }
+
 .px-scalein {
     animation: px-scalein 0.12s cubic-bezier(0, 0, 0.2, 1);
 }
@@ -94,6 +102,20 @@ body {
 
 a {
     text-decoration: none;
+}
+
+.form-container {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Lo desplazamos ligeramente hacia abajo inicialmente */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    /* Controlamos la opacidad y el movimiento */
+}
+
+.form-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+    /* Restablecemos la posición cuando se hace visible */
 }
 
 .layout-container {
@@ -1459,4 +1481,3 @@ p:last-child {
 .p-toast.opacity-enter {
     opacity: 1;
 }
-

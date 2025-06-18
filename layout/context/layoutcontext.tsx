@@ -1,11 +1,14 @@
 'use client';
 
 import Head from 'next/head';
-import React, { useState } from 'react';
-import { Breadcrumb, LayoutConfig, LayoutContextProps } from '../../types/layout';
+import { Breadcrumb, LayoutConfig, LayoutContextProps, LayoutConfigContextProps, SidebarContextProps, BreadcrumbContextProps } from '../../types/layout';
+import React, { useState, useMemo, useCallback } from 'react';
 import { ChildContainerProps } from '@/types';
 
 export const LayoutContext = React.createContext({} as LayoutContextProps);
+export const LayoutConfigContext = React.createContext({} as LayoutConfigContextProps);
+export const SidebarContext = React.createContext({} as SidebarContextProps);
+export const BreadcrumbContext = React.createContext({} as BreadcrumbContextProps);
 
 export const LayoutProvider = (props: ChildContainerProps) => {
     const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>([]);
@@ -33,7 +36,9 @@ export const LayoutProvider = (props: ChildContainerProps) => {
         rightMenuActive: false
     });
 
-    const onMenuToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+    const onMenuToggle = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+
         if (isOverlay()) {
             setLayoutState((prevLayoutState) => ({
                 ...prevLayoutState,
@@ -53,72 +58,111 @@ export const LayoutProvider = (props: ChildContainerProps) => {
 
             event.preventDefault();
         }
-    };
+    }, [isOverlay, isDesktop]);
 
-    const hideOverlayMenu = () => {
+
+    const hideOverlayMenu = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             overlayMenuActive: false,
             staticMenuMobileActive: false
         }));
-    };
+    }, []);
 
-    const toggleSearch = () => {
+
+    const toggleSearch = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
-            searchBarActive: !layoutState.searchBarActive
+            searchBarActive: !prevLayoutState.searchBarActive
         }));
-    };
+    }, [layoutState.searchBarActive]);
 
-    const onSearchHide = () => {
+
+    const onSearchHide = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             searchBarActive: false
         }));
-    };
+    }, []);
 
-    const showRightSidebar = () => {
+
+    const showRightSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuActive: true
         }));
         hideOverlayMenu();
-    };
+    }, [hideOverlayMenu]);
 
-    const showConfigSidebar = () => {
+
+    const showConfigSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             configSidebarVisible: true
         }));
-    };
-    const showSidebar = () => {
+    }, []);
+
+    const showSidebar = useCallback(() => {
+
         setLayoutState((prevLayoutState) => ({
             ...prevLayoutState,
             rightMenuVisible: true
         }));
-    };
+    }, []);
 
-    const isOverlay = () => {
+
+    const isOverlay = useCallback(() => {
         return layoutConfig.menuMode === 'overlay';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isSlim = () => {
+    const isSlim = useCallback(() => {
         return layoutConfig.menuMode === 'slim';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isSlimPlus = () => {
+    const isSlimPlus = useCallback(() => {
         return layoutConfig.menuMode === 'slim-plus';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isHorizontal = () => {
+    const isHorizontal = useCallback(() => {
         return layoutConfig.menuMode === 'horizontal';
-    };
+    }, [layoutConfig.menuMode]);
 
-    const isDesktop = () => {
+    const isDesktop = useCallback(() => {
         return window.innerWidth > 991;
+
     };
 
-    const value = {
+    const layoutConfigValue: LayoutConfigContextProps = {
+        layoutConfig,
+        setLayoutConfig,
+        isSlim,
+        isSlimPlus,
+        isHorizontal,
+        isDesktop
+    };
+
+    const sidebarValue: SidebarContextProps = {
+        layoutState,
+        setLayoutState,
+        showRightSidebar,
+        onMenuToggle,
+        onSearchHide,
+        toggleSearch,
+        showConfigSidebar,
+        showSidebar
+    };
+
+    const breadcrumbValue: BreadcrumbContextProps = {
+        breadcrumbs,
+        setBreadcrumbs
+    };
+
+    const contextValue: LayoutContextProps = {
         layoutConfig,
         setLayoutConfig,
         layoutState,
@@ -138,24 +182,30 @@ export const LayoutProvider = (props: ChildContainerProps) => {
     };
 
     return (
-        <LayoutContext.Provider value={value}>
-            <>
-                <Head>
-                    <title>PrimeReact - DIAMOND</title>
-                    <meta charSet="UTF-8" />
-                    <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
-                    <meta name="robots" content="index, follow" />
-                    <meta name="viewport" content="initial-scale=1, width=device-width" />
-                    <meta property="og:type" content="website"></meta>
-                    <meta property="og:title" content="Diamond by PrimeReact for NextJS"></meta>
-                    <meta property="og:url" content="https://diamond.primereact.org"></meta>
-                    <meta property="og:description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
-                    <meta property="og:image" content="https://www.primefaces.org/static/social/diamond-react.png"></meta>
-                    <meta property="og:ttl" content="604800"></meta>
-                    <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
-                </Head>
-                {props.children}
-            </>
-        </LayoutContext.Provider>
+        <LayoutConfigContext.Provider value={layoutConfigValue}>
+            <SidebarContext.Provider value={sidebarValue}>
+                <BreadcrumbContext.Provider value={breadcrumbValue}>
+                    <LayoutContext.Provider value={contextValue}>
+                        <>
+                            <Head>
+                                <title>PrimeReact - DIAMOND</title>
+                                <meta charSet="UTF-8" />
+                                <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
+                                <meta name="robots" content="index, follow" />
+                                <meta name="viewport" content="initial-scale=1, width=device-width" />
+                                <meta property="og:type" content="website"></meta>
+                                <meta property="og:title" content="Diamond by PrimeReact for NextJS"></meta>
+                                <meta property="og:url" content="https://diamond.primereact.org"></meta>
+                                <meta property="og:description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
+                                <meta property="og:image" content="https://www.primefaces.org/static/social/diamond-react.png"></meta>
+                                <meta property="og:ttl" content="604800"></meta>
+                                <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
+                            </Head>
+                            {props.children}
+                        </>
+                    </LayoutContext.Provider>
+                </BreadcrumbContext.Provider>
+            </SidebarContext.Provider>
+        </LayoutConfigContext.Provider>
     );
 };
