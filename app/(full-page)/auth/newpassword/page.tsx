@@ -4,12 +4,12 @@ import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
 import { useRouter } from 'next/navigation';
 import { Page } from '../../../../types/layout';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
 import { InputText } from 'primereact/inputtext';
 
 const NewPassword: Page = () => {
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
 
     const goHome = () => {

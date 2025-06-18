@@ -8,16 +8,11 @@ import { Editor } from 'primereact/editor';
 import { Toast } from 'primereact/toast';
 import { MailContext } from '../../../../../../../demo/components/apps/mail/context/mailcontext';
 
+import type { PageProps } from 'next';
 import type { Demo } from '@/types';
 import { useSearchParams } from 'next/navigation';
 
-interface MailPageProps {
-    params: {
-        mailId: string;
-    };
-}
-
-const AppMailDetail = ({ params }: MailPageProps) => {
+const AppMailDetail = ({ params }: PageProps<{ mailId: string }>) => {
     const searchParams = useSearchParams();
 
     const toast = useRef<Toast | null>(null);

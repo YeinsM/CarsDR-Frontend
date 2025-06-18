@@ -5,11 +5,11 @@ import { classNames } from 'primereact/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import { MailContext } from './context/mailcontext';
 import type { AppMailSidebarItem, Demo } from '@/types';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 
 function AppMailSidebar() {
     const [items, setItems] = useState<AppMailSidebarItem[]>([]);
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
     const pathname = usePathname();
     const { mails } = useContext(MailContext);

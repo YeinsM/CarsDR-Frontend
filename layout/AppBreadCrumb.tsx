@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { ObjectUtils, classNames } from 'primereact/utils';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { LayoutContext } from './context/layoutcontext';
+import { BreadcrumbContext } from './context/layoutcontext';
 import { Breadcrumb } from '../types/layout';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
@@ -88,7 +88,7 @@ const AppBreadcrumb = () => {
                                     placeholder="Search"
                                     onBlur={deactivateSearch}
                                     onKeyDown={(e) => {
-                                        if (e.key === 'ESCAPE') deactivateSearch();
+                                        if (e.key === 'Escape') deactivateSearch();
                                     }}
                                 />
                                 <i className="pi pi-search"></i>

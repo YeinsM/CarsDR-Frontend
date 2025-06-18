@@ -3,12 +3,12 @@
 import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
 import type { Page } from '@/types';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
 import { useRouter } from 'next/navigation';
 
 const Error: Page = () => {
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
 
     const goHome = () => {

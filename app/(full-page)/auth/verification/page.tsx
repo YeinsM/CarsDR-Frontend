@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import type { Page } from '@/types';
 import { Tooltip } from 'primereact/tooltip';
 import { InputNumber } from 'primereact/inputnumber';
-import { LayoutContext } from '../../../../layout/context/layoutcontext';
+import { LayoutConfigContext } from '../../../../layout/context/layoutcontext';
 import { classNames } from 'primereact/utils';
 
 const Verification: Page = () => {
-    const { layoutConfig } = useContext(LayoutContext);
+    const { layoutConfig } = useContext(LayoutConfigContext);
     const router = useRouter();
 
     const [value1, setValue1] = useState(null);
@@ -62,7 +62,7 @@ const Verification: Page = () => {
 
                     {/* Formulario de verificación */}
                     <div className="w-full max-w-sm text-left space-y-6 mt-5">
-                        <div className=''>
+                        <div className="">
                             <h4 className="text-gray-900 dark:text-white font-bold text-2xl mb-4">Verification</h4>
                             <p className="text-gray-500 text-lg">We have sent a code to your email:</p>
                             <div className="flex items-center mt-3 text-lg">
