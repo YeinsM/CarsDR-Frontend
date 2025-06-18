@@ -3,18 +3,18 @@
 import { usePathname } from 'next/navigation';
 import { ObjectUtils, classNames } from 'primereact/utils';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { LayoutContext } from './context/layoutcontext';
 import { Breadcrumb } from '../types/layout';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { fileURLToPath } from 'url';
+import { LayoutContext } from './context/layoutcontext';
 
 const AppBreadcrumb = () => {
     const [searchActive, setSearchActive] = useState(false);
     const pathname = usePathname();
     const [breadcrumb, setBreadcrumb] = useState<Breadcrumb | null>(null);
     const { breadcrumbs, showSidebar } = useContext(LayoutContext);
-    // const { breadcrumbs } = useContext(LayoutContext);
+    // const { breadcrumbs } = useContext(BreadcrumbContext);
     const searchInput = useRef(null);
 
     useEffect(() => {
@@ -32,16 +32,14 @@ const AppBreadcrumb = () => {
     }, [pathname, breadcrumbs]);
 
     // useEffect(() => {
-    //     const match = breadcrumbs.find(b => {
-    //         if (!b.to) return false
+    //     const match = breadcrumbs.find((b) => {
+    //         if (!b.to) return false;
 
-    //         return pathname === b.to || pathname.startsWith(b.to + '/')
+    //         return pathname === b.to || pathname.startsWith(b.to + '/');
+    //     });
 
-    //     })
-
-    //     setBreadcrumb(match ?? null)
-
-    // }, [pathname, breadcrumbs])
+    //     setBreadcrumb(match ?? null);
+    // }, [pathname, breadcrumbs]);
 
     const activateSearch = () => {
         setSearchActive(true);
@@ -88,7 +86,7 @@ const AppBreadcrumb = () => {
                                     placeholder="Search"
                                     onBlur={deactivateSearch}
                                     onKeyDown={(e) => {
-                                        if (e.key === 'ESCAPE') deactivateSearch();
+                                        if (e.key === 'Escape') deactivateSearch();
                                     }}
                                 />
                                 <i className="pi pi-search"></i>
