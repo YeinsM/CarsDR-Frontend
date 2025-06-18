@@ -13,33 +13,35 @@ const AppBreadcrumb = () => {
     const [searchActive, setSearchActive] = useState(false);
     const pathname = usePathname();
     const [breadcrumb, setBreadcrumb] = useState<Breadcrumb | null>(null);
-    //const { breadcrumbs, showSidebar } = useContext(LayoutContext);
-    const { breadcrumbs } = useContext(BreadcrumbContext);
+    const { breadcrumbs, showSidebar } = useContext(LayoutContext);
+    // const { breadcrumbs } = useContext(LayoutContext);
     const searchInput = useRef(null);
 
-    // useEffect(() => {
-    //     const filteredBreadcrumbs = breadcrumbs?.find((crumb) => {
-    //         const lastPathSegment = crumb.to.split('/').pop();
-    //         const lastRouterSegment = pathname.split('/').pop();
-
-    //         if (lastRouterSegment?.startsWith('[') && !isNaN(Number(lastPathSegment))) {
-    //             return pathname.split('/').slice(0, -1).join('/') === crumb.to?.split('/').slice(0, -1).join('/');
-    //         }
-    //         return crumb.to === pathname;
-    //     });
-
-    //     setBreadcrumb(filteredBreadcrumbs);
-    // }, [pathname, breadcrumbs]);
-
     useEffect(() => {
-        const match = breadcrumbs.find((b) => {
-            if (!b.to) return false;
+        const filteredBreadcrumbs = breadcrumbs?.find((crumb) => {
+            const lastPathSegment = crumb.to.split('/').pop();
+            const lastRouterSegment = pathname.split('/').pop();
 
-            return pathname === b.to || pathname.startsWith(b.to + '/');
+            if (lastRouterSegment?.startsWith('[') && !isNaN(Number(lastPathSegment))) {
+                return pathname.split('/').slice(0, -1).join('/') === crumb.to?.split('/').slice(0, -1).join('/');
+            }
+            return crumb.to === pathname;
         });
 
-        setBreadcrumb(match ?? null);
+        setBreadcrumb(filteredBreadcrumbs);
     }, [pathname, breadcrumbs]);
+
+    // useEffect(() => {
+    //     const match = breadcrumbs.find(b => {
+    //         if (!b.to) return false
+
+    //         return pathname === b.to || pathname.startsWith(b.to + '/')
+
+    //     })
+
+    //     setBreadcrumb(match ?? null)
+
+    // }, [pathname, breadcrumbs])
 
     const activateSearch = () => {
         setSearchActive(true);

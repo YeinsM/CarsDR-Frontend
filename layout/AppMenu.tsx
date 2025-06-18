@@ -31,6 +31,12 @@ const AppMenu = () => {
                     icon: 'pi pi-th-large',
                     to: '/profile/module'
                 },
+                { separator: true },
+                {
+                    label: 'Profile',
+                    icon: 'pi pi-user',
+                    to: '/profile/profile'
+                },
             ]
         }
     ];
