@@ -22,25 +22,25 @@ const AppSubMenu = (props: MenuProps) => {
         const crumbs = breadCrumGenerator(props.model);
     }, [module, setBreadcrumbs]);
 
-    // const generateBreadcrumbs = (model: MenuModal[]) => {
-    //     let breadcrumbs: Breadcrumb[] = [];
+    const generateBreadcrumbs = (model: MenuModal[]) => {
+        let breadcrumbs: Breadcrumb[] = [];
 
-    //     const getBreadcrumb = (item: BreadcrumbItem, labels: string[] = []) => {
-    //         const { label, to, items } = item;
+        const getBreadcrumb = (item: BreadcrumbItem, labels: string[] = []) => {
+            const { label, to, items } = item;
 
-    //         label && labels.push(label);
-    //         items &&
-    //             items.forEach((_item) => {
-    //                 getBreadcrumb(_item, labels.slice());
-    //             });
-    //         to && breadcrumbs.push({ labels, to });
-    //     };
+            label && labels.push(label);
+            items &&
+                items.forEach((_item) => {
+                    getBreadcrumb(_item, labels.slice());
+                });
+            to && breadcrumbs.push({ labels, to });
+        };
 
-    //     model.forEach((item) => {
-    //         getBreadcrumb(item);
-    //     });
-    //     setBreadcrumbs(breadcrumbs);
-    // };
+        model.forEach((item) => {
+            getBreadcrumb(item);
+        });
+        setBreadcrumbs(breadcrumbs);
+    };
 
     return (
         <MenuProvider>
