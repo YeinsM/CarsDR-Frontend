@@ -2,7 +2,7 @@
 
 import Head from 'next/head';
 import { Breadcrumb, LayoutConfig, LayoutContextProps, LayoutConfigContextProps, SidebarContextProps, BreadcrumbContextProps } from '../../types/layout';
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ChildContainerProps } from '@/types';
 
 export const LayoutContext = React.createContext({} as LayoutContextProps);
@@ -37,30 +37,6 @@ export const LayoutProvider = (props: ChildContainerProps) => {
     });
 
 
-    const onMenuToggle = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-
-        if (isOverlay()) {
-            setLayoutState((prevLayoutState) => ({
-                ...prevLayoutState,
-                overlayMenuActive: !prevLayoutState.overlayMenuActive
-            }));
-        }
-        if (isDesktop()) {
-            setLayoutState((prevLayoutState) => ({
-                ...prevLayoutState,
-                staticMenuDesktopInactive: !prevLayoutState.staticMenuDesktopInactive
-            }));
-        } else {
-            setLayoutState((prevLayoutState) => ({
-                ...prevLayoutState,
-                staticMenuMobileActive: !prevLayoutState.staticMenuMobileActive
-            }));
-
-            event.preventDefault();
-        }
-    }, [isOverlay, isDesktop]);
-
-
     const hideOverlayMenu = useCallback(() => {
 
         setLayoutState((prevLayoutState) => ({
@@ -77,7 +53,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
             ...prevLayoutState,
             searchBarActive: !prevLayoutState.searchBarActive
         }));
-    }, [layoutState.searchBarActive]);
+    }, []);
 
 
     const onSearchHide = useCallback(() => {
@@ -134,8 +110,30 @@ export const LayoutProvider = (props: ChildContainerProps) => {
 
     const isDesktop = useCallback(() => {
         return window.innerWidth > 991;
+    }, [])
 
-    };
+    const onMenuToggle = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+
+        if (isOverlay()) {
+            setLayoutState((prevLayoutState) => ({
+                ...prevLayoutState,
+                overlayMenuActive: !prevLayoutState.overlayMenuActive
+            }));
+        }
+        if (isDesktop()) {
+            setLayoutState((prevLayoutState) => ({
+                ...prevLayoutState,
+                staticMenuDesktopInactive: !prevLayoutState.staticMenuDesktopInactive
+            }));
+        } else {
+            setLayoutState((prevLayoutState) => ({
+                ...prevLayoutState,
+                staticMenuMobileActive: !prevLayoutState.staticMenuMobileActive
+            }));
+
+            event.preventDefault();
+        }
+    }, [isOverlay, isDesktop]);
 
     const layoutConfigValue: LayoutConfigContextProps = {
         layoutConfig,
