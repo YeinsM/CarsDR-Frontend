@@ -6,7 +6,6 @@ import AppMenuitem from './AppMenuitem';
 import { SidebarContext, BreadcrumbContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
 import { Breadcrumb, BreadcrumbItem, MenuModal, MenuProps } from '../types/layout';
-import breadCrumGenerator from './utils/breadCrumUtils';
 
 const AppSubMenu = (props: MenuProps) => {
     const { layoutState } = useContext(SidebarContext);
@@ -17,10 +16,10 @@ const AppSubMenu = (props: MenuProps) => {
         tooltipRef.current?.hide();
     }, [layoutState.overlaySubmenuActive]);
 
-    useEffect(() => {
-        //   generateBreadcrumbs(props.model);
-        const crumbs = breadCrumGenerator(props.model);
-    }, [module, setBreadcrumbs]);
+    // useEffect(() => {
+    //     //   generateBreadcrumbs(props.model);
+    //     const crumbs = breadCrumGenerator(props.model);
+    // }, [module, setBreadcrumbs]);
 
     const generateBreadcrumbs = (model: MenuModal[]) => {
         let breadcrumbs: Breadcrumb[] = [];
