@@ -53,7 +53,7 @@ export const LayoutProvider = (props: ChildContainerProps) => {
             ...prevLayoutState,
             searchBarActive: !prevLayoutState.searchBarActive
         }));
-    }, [layoutState.searchBarActive]);
+    }, []);
 
 
     const onSearchHide = useCallback(() => {

@@ -5,10 +5,10 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { useEventListener, useMountEffect, useResizeListener, useUnmountEffect } from 'primereact/hooks';
 import AppTopbar from './AppTopbar';
-import AppBreadCrumb from './AppBreadCrumb';
 import { PrimeReactContext } from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 import { ChildContainerProps } from '@/types';
+import AppBreadCrumb from './AppBreadCrumb';
 const AppProfileMenu = lazy(() => import('./AppProfileMenu'));
 const AppConfig = lazy(() => import('./AppConfig'));
 
@@ -51,7 +51,7 @@ const Layout = (props: ChildContainerProps) => {
             menuClick: false,
             resetMenu: (isSlim() || isSlimPlus() || isHorizontal()) && isDesktop()
         }));
-    }, [isSlim, isHorizontal, isDesktop, setLayoutState]);
+    }, [isSlim, isSlimPlus, isHorizontal, isDesktop, setLayoutState]);
 
     const blockBodyScroll = () => {
         if (document.body.classList) {
@@ -87,14 +87,25 @@ const Layout = (props: ChildContainerProps) => {
             unbindDocumentResizeListener();
             unblockBodyScroll();
         };
-    }, [layoutState.overlayMenuActive, layoutState.staticMenuMobileActive, layoutState.overlaySubmenuActive]);
+    }, [
+        layoutState.overlayMenuActive,
+        layoutState.staticMenuMobileActive,
+        layoutState.overlaySubmenuActive,
+        bindMenuOutsideClickListener,
+        unbindMenuOutsideClickListener,
+        bindDocumentResizeListener,
+        unbindDocumentResizeListener,
+        isSlim,
+        isSlimPlus,
+        isHorizontal
+    ]);
 
     useEffect(() => {
         const onRouteChange = () => {
             hideMenu();
         };
         onRouteChange();
-    }, [pathname, searchParams]);
+    }, [pathname, searchParams, hideMenu]);
 
     useUnmountEffect(() => {
         unbindMenuOutsideClickListener();
@@ -119,25 +130,27 @@ const Layout = (props: ChildContainerProps) => {
     });
 
     return (
-        <div className={classNames('layout-container', containerClassName)} data-theme={layoutConfig.colorScheme}>
-            <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
+        <Suspense fallback={null}>
+            <div className={classNames('layout-container', containerClassName)} data-theme={layoutConfig.colorScheme}>
+                <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
-            <div className="layout-content-wrapper">
-                <AppTopbar ref={topbarRef} sidebarRef={sidebarRef} />
-                <div className="content-breadcrumb">
-                    <AppBreadCrumb />
+                <div className="layout-content-wrapper">
+                    <AppTopbar ref={topbarRef} sidebarRef={sidebarRef} />
+                    <div className="content-breadcrumb">
+                        <AppBreadCrumb />
+                    </div>
+
+                    <div className="layout-content">{props.children}</div>
+                    <div className="layout-mask"></div>
                 </div>
-
-                <div className="layout-content">{props.children}</div>
-                <div className="layout-mask"></div>
+                <Suspense fallback={null}>
+                    <AppProfileMenu />
+                </Suspense>
+                <Suspense fallback={null}>
+                    <AppConfig />
+                </Suspense>
             </div>
-            <Suspense fallback={null}>
-                <AppProfileMenu />
-            </Suspense>
-            <Suspense fallback={null}>
-                <AppConfig />
-            </Suspense>
-        </div>
+        </Suspense>
     );
 };
 

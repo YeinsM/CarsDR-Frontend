@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
 import { BreadCrumb } from 'primereact/breadcrumb';
@@ -14,7 +14,7 @@ import { PanelMenu } from 'primereact/panelmenu';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
-const MenuDemo = ({ children }: any) => {
+function MenuDemo({ children }: any) {
     const [activeIndex, setActiveIndex] = useState(0);
     const menu = useRef<Menu>(null);
     const contextMenu = useRef<ContextMenu>(null);
@@ -581,4 +581,10 @@ const MenuDemo = ({ children }: any) => {
     );
 };
 
-export default MenuDemo;
+export default function Page(props: any) {
+    return (
+        <Suspense fallback={null}>
+            <MenuDemo {...props} />
+        </Suspense>
+    );
+}

@@ -1,8 +1,8 @@
 'use client';
+import React, { Suspense } from 'react';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Timeline } from 'primereact/timeline';
-import React from 'react';
 import type { CustomEvent } from '@/types';
 
 const TimelineDemo = () => {
@@ -112,4 +112,10 @@ const TimelineDemo = () => {
     );
 };
 
-export default TimelineDemo;
+const SuspenseWrapper = (props) => (
+    <Suspense fallback={null}>
+        <TimelineDemo {...props} />
+    </Suspense>
+);
+
+export default SuspenseWrapper;

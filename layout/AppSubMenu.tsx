@@ -1,7 +1,7 @@
 'use client';
 
 import { Tooltip } from 'primereact/tooltip';
-import { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useCallback } from 'react';
 import AppMenuitem from './AppMenuitem';
 import { SidebarContext, BreadcrumbContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
@@ -17,13 +17,7 @@ const AppSubMenu = (props: MenuProps) => {
         tooltipRef.current?.hide();
     }, [layoutState.overlaySubmenuActive]);
 
-    useEffect(() => {
-          generateBreadcrumbs(props.model);
-          //coments
-       // const crumbs = breadCrumGenerator(props.model)
-    }, [module, setBreadcrumbs]);
-
-    const generateBreadcrumbs = (model: MenuModal[]) => {
+    const generateBreadcrumbs = useCallback((model: MenuModal[]) => {
         let breadcrumbs: Breadcrumb[] = [];
 
         const getBreadcrumb = (item: BreadcrumbItem, labels: string[] = []) => {
@@ -41,7 +35,11 @@ const AppSubMenu = (props: MenuProps) => {
             getBreadcrumb(item);
         });
         setBreadcrumbs(breadcrumbs);
-    };
+    }, [setBreadcrumbs]);
+
+    useEffect(() => {
+        generateBreadcrumbs(props.model);
+    }, [generateBreadcrumbs, props.model]);
 
     return (
         <MenuProvider>

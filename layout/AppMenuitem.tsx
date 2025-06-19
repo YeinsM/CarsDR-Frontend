@@ -1,5 +1,5 @@
 'use client';
-
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Ripple } from 'primereact/ripple';
@@ -10,7 +10,7 @@ import { MenuContext } from './context/menucontext';
 import { useSubmenuOverlayPosition } from './hooks/useSubmenuOverlayPosition';
 import { AppMenuItemProps } from '../types/layout';
 
-const AppMenuitem = (props: AppMenuItemProps) => {
+function AppMenuitemInner(props: AppMenuItemProps) {
     const { activeMenu, setActiveMenu } = useContext(MenuContext);
     const { isSlim, isSlimPlus, isHorizontal, isDesktop, layoutConfig } = useContext(LayoutConfigContext);
     const { setLayoutState, layoutState } = useContext(SidebarContext);
@@ -38,13 +38,13 @@ const AppMenuitem = (props: AppMenuItemProps) => {
                 resetMenu: false
             }));
         }
-    }, [layoutState.resetMenu]);
+    }, [layoutState.resetMenu, setActiveMenu, setLayoutState]);
 
     useEffect(() => {
         if (!(isSlim() || isHorizontal() || isSlimPlus()) && isActiveRoute) {
             setActiveMenu(key);
         }
-    }, [layoutConfig.menuMode]);
+    }, [layoutConfig.menuMode, isSlim, isHorizontal, isSlimPlus, isActiveRoute, setActiveMenu, key]);
 
     useEffect(() => {
         const url = pathname + searchParams.toString();
@@ -55,7 +55,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
             }
         };
         onRouteChange(url);
-    }, [pathname, searchParams]);
+    }, [pathname, searchParams, isSlim, isHorizontal, isSlimPlus, item.to, setActiveMenu, key]);
 
     const itemClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
         //avoid processing disabled items
@@ -182,6 +182,12 @@ const AppMenuitem = (props: AppMenuItemProps) => {
             {subMenu}
         </li>
     );
-};
+}
 
-export default AppMenuitem;
+export default function AppMenuitem(props: AppMenuItemProps) {
+    return (
+        <Suspense fallback={null}>
+            <AppMenuitemInner {...props} />
+        </Suspense>
+    );
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useContext, useEffect, useRef, useCallback } from 'react';
 import { classNames } from 'primereact/utils';
 import { PrimeReactContext } from 'primereact/api';
 import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
@@ -8,7 +8,6 @@ import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
 import { Button } from 'primereact/button';
 import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { Sidebar } from 'primereact/sidebar';
-import { useContext, useEffect } from 'react';
 import { AppConfigProps, ColorScheme } from '../types/layout';
 
 const AppConfig = (props: AppConfigProps) => {
@@ -32,7 +31,7 @@ const AppConfig = (props: AppConfigProps) => {
         if (isSlim() || isHorizontal() || isSlimPlus()) {
             setLayoutState((prevState) => ({ ...prevState, resetMenu: true }));
         }
-    }, [layoutConfig.menuMode]);
+    }, [layoutConfig.menuMode, isSlim, isHorizontal, isSlimPlus, setLayoutState]);
 
     const changeInputStyle = (e: RadioButtonChangeEvent) => {
         setLayoutConfig((prevState) => ({ ...prevState, inputStyle: e.value }));
@@ -99,13 +98,13 @@ const AppConfig = (props: AppConfigProps) => {
         }));
     };
 
-    const applyScale = () => {
+    const applyScale = useCallback(() => {
         document.documentElement.style.fontSize = layoutConfig.scale + 'px';
-    };
+    }, [layoutConfig.scale]);
 
     useEffect(() => {
         applyScale();
-    }, [layoutConfig.scale]);
+    }, [applyScale]);
 
     return (
         <div id="layout-config">

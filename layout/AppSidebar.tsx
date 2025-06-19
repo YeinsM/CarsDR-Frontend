@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useCallback } from 'react';
 import AppMenu from './AppMenu';
 import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { MenuProvider } from './context/menucontext';
@@ -18,6 +18,15 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
         }));
     };
 
+    const resetOverlay = useCallback(() => {
+        if (layoutState.overlayMenuActive) {
+            setLayoutState((prevLayoutState) => ({
+                ...prevLayoutState,
+                overlayMenuActive: false
+            }));
+        }
+    }, [layoutState.overlayMenuActive, setLayoutState]);
+
     useEffect(() => {
         return () => {
             if (timeoutRef.current) {
@@ -26,19 +35,9 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
             }
             resetOverlay();
         };
-    }, []);
+    }, [resetOverlay]);
 
-    const resetOverlay = () => {
-        if (layoutState.overlayMenuActive) {
-            setLayoutState((prevLayoutState) => ({
-                ...prevLayoutState,
-                overlayMenuActive: false
-            }));
-        }
-    };
-
-
-    const timeoutRef = useRef<number | null>(null);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const onMouseEnter = () => {
         if (!layoutState.anchored) {
@@ -63,7 +62,7 @@ const AppSidebar = (props: { sidebarRef: React.RefObject<HTMLDivElement> }) => {
                             sidebarActive: false
                         })),
                     300
-                ) as NodeJS.Timeout;
+                ) as unknown as ReturnType<typeof setTimeout>;
             }
         }
     };

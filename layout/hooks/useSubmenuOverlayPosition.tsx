@@ -26,7 +26,7 @@ export const useSubmenuOverlayPosition = ({ target, overlay, container, when }) 
         }
     });
 
-    const calculatePosition = () => {
+    const calculatePosition = useCallback(() => {
         if (overlay) {
             const { left, top } = target.getBoundingClientRect();
             const { height: vHeight } = DomHandler.getViewport();
@@ -42,7 +42,7 @@ export const useSubmenuOverlayPosition = ({ target, overlay, container, when }) 
                 overlay.style.top = vHeight < height ? `${top - (height - vHeight)}px` : `${top}px`;
             }
         }
-    };
+    }, [overlay, target, isHorizontal, isSlim, isSlimPlus]);
 
     useEffect(() => {
         when && bindScrollListener();
@@ -50,9 +50,9 @@ export const useSubmenuOverlayPosition = ({ target, overlay, container, when }) 
         return () => {
             unbindScrollListener();
         };
-    }, [when]);
+    }, [when, bindScrollListener, unbindScrollListener]);
 
     useEffect(() => {
         when && calculatePosition();
-    }, [when, activeMenu]);
+    }, [when, activeMenu, calculatePosition]);
 };

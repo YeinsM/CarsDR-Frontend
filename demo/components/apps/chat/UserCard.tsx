@@ -23,7 +23,7 @@ function UserCard(props: UserCardProps) {
     useEffect(() => {
         let filtered = props.user.messages.filter((m) => m.ownerId !== 123);
         setLastMessage(filtered[filtered.length - 1]);
-    }, []);
+    }, [props.user.messages]);
 
     return (
         <div
