@@ -6,13 +6,14 @@ import { PrimeReactContext } from 'primereact/api';
 import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
 import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
 import { Button } from 'primereact/button';
-import { LayoutContext } from './context/layoutcontext';
+import { LayoutConfigContext, SidebarContext } from './context/layoutcontext';
 import { Sidebar } from 'primereact/sidebar';
 import { useContext, useEffect } from 'react';
 import { AppConfigProps, ColorScheme } from '../types/layout';
 
 const AppConfig = (props: AppConfigProps) => {
-    const { layoutConfig, setLayoutConfig, layoutState, setLayoutState, isSlim, isHorizontal, isSlimPlus } = useContext(LayoutContext);
+    const { layoutConfig, setLayoutConfig, isSlim, isHorizontal, isSlimPlus } = useContext(LayoutConfigContext);
+    const { layoutState, setLayoutState } = useContext(SidebarContext);
     const { setRipple, changeTheme } = useContext(PrimeReactContext);
     const scales = [12, 13, 14, 15, 16];
 
