@@ -84,7 +84,7 @@ function CreateTask() {
     useEffect(() => {
         if (dialogConfig.newTask === false) setTask(selectedTask);
         if (dialogConfig.newTask) resetTask();
-    }, [dialogConfig]);
+    }, [dialogConfig, selectedTask]);
 
     return (
         <React.Fragment>

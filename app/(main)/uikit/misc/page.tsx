@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { Suspense, useState, useEffect, useRef } from 'react';
 import { ProgressBar } from 'primereact/progressbar';
 import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
@@ -217,4 +217,10 @@ const MiscDemo = () => {
     );
 };
 
-export default MiscDemo;
+export default function MiscDemoPage() {
+    return (
+        <Suspense fallback={null}>
+            <MiscDemo />
+        </Suspense>
+    );
+}

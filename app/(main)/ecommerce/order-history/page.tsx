@@ -1,7 +1,7 @@
 'use client';
+import React from 'react';
 import { Divider } from 'primereact/divider';
 import { Ripple } from 'primereact/ripple';
-import React from 'react';
 
 function OrderHistory() {
     const orders = [

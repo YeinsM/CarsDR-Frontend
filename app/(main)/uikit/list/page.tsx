@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Button } from 'primereact/button';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
@@ -11,7 +11,7 @@ import { ProductService } from '../../../../demo/service/ProductService';
 import { InputText } from 'primereact/inputtext';
 import type { Demo } from '@/types';
 
-const ListDemo = () => {
+function ListDemo() {
     const listValue = [
         { name: 'San Francisco', code: 'SF' },
         { name: 'London', code: 'LDN' },
@@ -187,6 +187,12 @@ const ListDemo = () => {
             </div>
         </div>
     );
-};
+}
 
-export default ListDemo;
+export default function Page(props: any) {
+    return (
+        <Suspense fallback={null}>
+            <ListDemo {...props} />
+        </Suspense>
+    );
+}

@@ -1,4 +1,5 @@
 'use client';
+import React, { Suspense, useRef, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Chip } from 'primereact/chip';
 import { Dropdown } from 'primereact/dropdown';
@@ -7,7 +8,6 @@ import { FileUpload, FileUploadSelectEvent, FileUploadUploadEvent, ItemTemplateO
 import { InputSwitch } from 'primereact/inputswitch';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
-import React, { useRef, useState } from 'react';
 import type { Demo } from '@/types';
 
 function NewProduct() {
@@ -288,4 +288,10 @@ function NewProduct() {
     );
 }
 
-export default NewProduct;
+export default function NewProductWithSuspense(props) {
+    return (
+        <Suspense fallback={null}>
+            <NewProduct {...props} />
+        </Suspense>
+    );
+}

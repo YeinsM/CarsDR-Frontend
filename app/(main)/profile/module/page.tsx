@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -78,4 +78,10 @@ const ModulePage = () => {
     );
 };
 
-export default ModulePage;
+export default function ModulePageWithSuspense(props) {
+    return (
+        <Suspense fallback={null}>
+            <ModulePage {...props} />
+        </Suspense>
+    );
+}

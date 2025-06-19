@@ -1,10 +1,10 @@
 'use client';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
-import React, { useEffect, useState } from 'react';
 import type { Demo } from '@/types';
 
 function ProfileCreate() {

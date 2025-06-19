@@ -17,23 +17,18 @@ function Colors() {
         <div className="card">
             <h2>Colors</h2>
             <p>Each PrimeReact theme exports its own color palette.</p>
-
             <h4>Getting Started</h4>
             <p>
                 Colors are exported as CSS variables and used with the standard <span className="text-primary font-medium">var</span> syntax e.g. <span className="text-primary font-medium">var(--text-color)</span>.
             </p>
-
             <pre className="app-code">
                 <code>{`<span style={{color:'var(--text-color)'}}></span>`}</code>
             </pre>
-
             <h4>PrimeFlex Integration</h4>
             <p>Color utility classes of PrimeFlex such as background, text and border use the exported CSS variables from the theme so PrimeFlex or PrimeBlocks are perfectly compatible with the provided themes.</p>
-
             <pre className="app-code">
                 <code>{`<div className="bg-blue-500></div>`}</code>
             </pre>
-
             <h4>Exported Colors</h4>
             <p>Following is the list of colors exported as CSS variables from the theme.</p>
             <div className="card">
@@ -132,10 +127,8 @@ function Colors() {
                     </tbody>
                 </table>
             </div>
-
             <h4>Color Palette</h4>
             <p>A palette consists of 9 colors where each color provides tints/shades from 50 to 900.</p>
-
             <div className="card">
                 <div className="flex flex-wrap">
                     {colors.map((color, i) => {

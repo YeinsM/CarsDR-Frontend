@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 function Invoice() {
     return (
@@ -96,4 +96,10 @@ function Invoice() {
     );
 }
 
-export default Invoice;
+export default function InvoiceWithSuspense(props) {
+    return (
+        <Suspense fallback={null}>
+            <Invoice {...props} />
+        </Suspense>
+    );
+}

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import Layout from '../../layout/layout';
+import ClientLayoutWrapper from './ClientLayoutWrapper';
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     title: 'PrimeReact Atlantis',
     description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.',
     robots: { index: false, follow: false },
-    viewport: { initialScale: 1, width: 'device-width' },
     openGraph: {
         type: 'website',
         title: 'PrimeReact Atlantis-REACT',
@@ -23,6 +22,11 @@ export const metadata: Metadata = {
     }
 };
 
+export const viewport = {
+    initialScale: 1,
+    width: 'device-width'
+};
+
 export default function MainLayout({ children }: MainLayoutProps) {
-    return <Layout>{children}</Layout>;
+    return <ClientLayoutWrapper>{children}</ClientLayoutWrapper>;
 }

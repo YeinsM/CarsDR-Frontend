@@ -11,7 +11,6 @@ import { Tooltip } from 'primereact/tooltip';
 import Link from 'next/link';
 import { User } from '@/app/core/models/user.model';
 import { loginUser } from '@/app/core/services/user.service';
-import { AxiosToastError } from '@/app/api/Api';
 import { useToast } from '@/app/utils/ToastContext';
 
 const Login: Page = () => {
@@ -43,13 +42,12 @@ const Login: Page = () => {
                 router.push('/');
             }
         } catch (error) {
-            // toast.error(error.response.data.message)
         }
     };
 
     useEffect(() => {
         showSuccess('Sesión iniciada satisfactoriamente!');
-    }, []);
+    }, [showSuccess]);
 
     return (
         <div
