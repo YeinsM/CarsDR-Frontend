@@ -16,14 +16,7 @@ const AppSubMenu = (props: MenuProps) => {
         tooltipRef.current?.hide();
     }, [layoutState.overlaySubmenuActive]);
 
-
-    // useEffect(() => {
-    //     //   generateBreadcrumbs(props.model);
-    //     const crumbs = breadCrumGenerator(props.model);
-    // }, [module, setBreadcrumbs]);
-
-    const generateBreadcrumbs = (model: MenuModal[]) => {
-
+    const generateBreadcrumbs = useCallback((model: MenuModal[]) => {
         let breadcrumbs: Breadcrumb[] = [];
 
         const getBreadcrumb = (item: BreadcrumbItem, labels: string[] = []) => {
